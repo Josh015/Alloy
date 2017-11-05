@@ -17,7 +17,7 @@ Before using Alloy, there a couple things you MUST set up in your project:
 1. Open Edit->Project Settings->Graphics.
 2. Set the 'Deferred' setting to 'Custom shader'.
 3. Open the picker below, and select the 'Alloy Deferred Shading' shader.
- * See "Advanced Setup" section for additional options.
+  * See "Advanced Setup" section for additional options.
 4. Set the 'Deferred Reflections' setting to 'Custom shader'.
 5. Open the picker below, and select the 'Alloy Deferred Reflections' shader.
 6. Open Edit->Project Settings->Player.
