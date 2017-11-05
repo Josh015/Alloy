@@ -1,7 +1,6 @@
 # Alloy
 
 The most powerful, extensible, and accurate shading system for Unity, bringing ‘AAA’ graphics power to Unity games for Desktop, Console, Web and Next-gen Mobile.
---------------------------------------------------------------------------------------------------------------------------------------
 
 ## Pre-Import Checklist
 Alright, so we're ready to jump into some Alloy 3 goodness, but there's a few things we want to make sure we're ready for depending on what the state of your project is, and what past version of Alloy (if any) are in your project.
