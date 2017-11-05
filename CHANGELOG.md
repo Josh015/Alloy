@@ -1,12 +1,10 @@
-###Changelog
+### Changelog
 
 ## 4.2.0
-=====================
 Shaders:
 - Added Unity 2017.2 support.
 
 ## 4.1.1
-=====================
 Shaders:
 - Changed "Eye" shaders to add Roughness Source, Cornea Metallic, and Sclera Metallic properties.
   * "Property" option which applies just the roughness sliders without the roughness map.
@@ -34,7 +32,6 @@ Mods:
   * Decal specular occlusion now combines with the surface specular occlusion rather than replacing it.
 
 ## 4.1.0
-=====================
 Shaders:
 - Added Unity 2017.1 support.
 - Fixed "SpeedTree*" shaders to have Unity-recommended instancing limit.
@@ -44,7 +41,6 @@ Scripts:
 - Added Unity 2017.1 support.
 
 ## 3.6.4
-=====================
 Scripts:
 - Fixed issue where Unity static Area Lights' scene GUIs were not appearing after installing Alloy.
 - Fixed intermittent object reference error for Material Inspector.
@@ -54,12 +50,10 @@ Integration:
   * Excludes "Multiply (Double)" and "Alpha Blended Premultiply".
 
 ## 3.6.3
-=====================
 Scripts:
 - Fixed issue where AreaLights needed to update after all other light updates and animation clips had run.
 
 ## 3.6.2
-=====================
 Shaders:
 - Added new config option A_USE_BLACK_SPECULAR_COLOR_TOGGLE to allow killing specular lighting per-pixel.
   * Useful for RTP integration.
@@ -78,7 +72,6 @@ Integration:
 - Improved HX Volumetric Lighting integration with "Decal/Additive" shader.
 
 ## 3.6.1
-=====================
 - Shaders:
   * Fixed the compiler errors that happened when using new shadow masks mode.
   * Fixed issue where baked light occlusion was not being applied to first directional light in forward mode.
@@ -88,7 +81,6 @@ Integration:
   * Fixed issue with packer on first import where it could not detect "_PackerDefinition.asset".
 
 ## 3.6.0
-=====================
 Shaders:
 - Added Unity 5.6 support.
 - Added "Particles/Anim Alpha Blended" shader.
@@ -129,7 +121,6 @@ Integration:
   * Parallax Mapping support.
 
 ## 3.5.2
-=====================
 Shaders:
 - Changed deferred Skin and Transmission to work with single-pass stereo VR rendering.
 - Fixed issues with deferred Transmission code that would fail to compile on some platforms.
@@ -138,14 +129,12 @@ Integration:
 - Added support for "Vapor" transparency integration.
 
 ## 3.5.1
-=====================
 Shaders:
 - Fixed "Tessellation *" shaders target 4.6 warning messages.
 - Fixed "Glass *" shaders to support Unity 5.5.
   * Includes single-pass stereographic fix.
 
 ## 3.5.0
-=====================
 Shaders:
 - Added Unity 5.5 suppport.
 - Fixed shadow wind animations on SpeedTree and foliage shaders.
@@ -157,7 +146,6 @@ Known Issues:
 - Glass shader distortion is much weaker than expected.
 
 ## 3.4.5
-=====================
 Shaders:
 - Added Unity terrain foliage shaders.
   * Automatically applied when using Alloy "Terrain *" shaders.
@@ -188,13 +176,11 @@ Integration:
 - Updated "Alloy Deferred Shading UBER" shader to support UBER 1.2.
 
 ## 3.4.4
-=====================
 Scripts:
 - Added "Animated by Clip" toggle to the AreaLight component to support Animation Clips.
 - Fixed issue where "AlloyRequiredActions.cs" was causing build errors.
 
 ## 3.4.3
-=====================
 Scripts:
 - Changed "Material Migrator" to run on the entire project, rather than per-scene.
 - Changed "Material Migrator" to fix Normals Source on existing materials.
@@ -238,7 +224,6 @@ Integration:
 - Updated Substance Painter custom shader to support version 2.2.
 
 ## 3.4.1
-=====================
 NOTE: 
 - You must run the new Material Migrator tool in each of your scenes to clean up and replace old keywords.
   * Open Window->Alloy->Material Migrator.
@@ -300,7 +285,6 @@ Mods:
 - Fixed "Weathered Blend" base material map AO to be converted to linear-space before being applied.
 
 ## 3.4.0 b4
-=====================
 Shaders:
 - Changed "Mode" to "Roughness Source", "Full" to "Packed Map Alpha", and "Lite" to "Base Color Alpha".
 - Fixed issue where deferred override shaders failed to compile while creating a build.
@@ -310,7 +294,6 @@ Scripts:
 - Optimized Deferred Skin to use less bandwidth and VRAM at runtime.
 
 ## 3.4.0 b3
-=====================
 Shaders:
 - Added most of the Alloy shader features to the "SpeedTree" shader.
 - Added scroll to the "Vertex Blend TriPlanar" shaders' texture inputs.
@@ -323,7 +306,6 @@ Shaders:
   * Skinned meshes were crashing the editor.
 
 ## 3.4.0 b2
-=====================
 Shaders:
 - Added single-pass stereo rendering support.
 - Added "Skin (Forward)" shaders whose parameters and lighting behavior match our "Deferred Skin" pipeline.
@@ -345,7 +327,6 @@ Legacy:
 - Moved "Skin (Legacy)" shaders into the "Legacy" sub-folder/menu.
 
 ## 3.4.0 b1
-=====================
 Shaders:
 - Added Unity 5.4 support.
 - Added Light Probe Proxy Volume support to all lit shaders, including particles.
@@ -363,7 +344,6 @@ Mods:
 - Added "SP Car Paint" shader that is similar to the Substance Painter CarPaint shader.
 
 ## 3.3.5
-=====================
 Shaders:
 - Added detail normal map support to the SpeedTree shader's "Branch Detail" mode.
 - Added "nSplat" terrain shader variants.
@@ -398,7 +378,6 @@ Known Issues:
 - redLights 2.0 integration is currently broken.
 
 ## 3.3.4
-=====================
 Shaders:
 - Added support for directional disc area lights.
 - Added support for enabling Unity attenuation.
@@ -418,12 +397,10 @@ Mods:
 - Fixed "Deferred Decal Advanced" shader's compilation error.
 
 ## 3.3.3
-=====================
 Shaders:
 - Fixed the Skin shaders to not blur the specular illumination.
 
 ## 3.3.2
-=====================
 Shaders:
 - Added support for Tube area lights.
   * Disable via config flag to slightly improve sphere light performance.
@@ -437,7 +414,6 @@ Scripts:
 - Updated the area light control to support length on point lights for tube lights.
 
 ## 3.3.1
-=====================
 Shaders:
 - Added the "Decal/Additive" mesh-based deferred decal shader.
 - Fixed the Deferred Transmission and Skin effects to work with Deferred Reflection Probes disabled. 
@@ -451,7 +427,6 @@ Integration:
   * Removed the opaque shader, since the alpha test shader will work just as well in this context.
 
 ## 3.3.0
-=====================
 Shaders:
 - Added SpeedTree shaders.
 - Added the "Decal/Alpha", "Decal/Cutout", and "Decal/Multiplicative" mesh-based deferred decal shaders.
@@ -506,7 +481,6 @@ Documentation:
 - Updated and reorganized most of the existing sections.
 
 ## 3.2.7
-=====================
 Shaders:
 - Added a deferred reflections override shader.
 - Added a shadow cull mode setting on the "Transmission SingleSided" shaders.
@@ -516,7 +490,6 @@ Substance Painter:
 - Fixed the alpha blending/test shader variants.
 
 ## 3.2.6
-=====================
 Shaders:
 - Fixed and simplified the UBER integration by adding a dedicated deferred shader.
 
@@ -524,7 +497,6 @@ Scripts:
 - Fixed the Map Packer pack definition corruption problem.
 
 ## 3.2.5
-=====================
 Shaders:
 - Added "Alloy/Particles/VertexLit Blended" shader with support for vertex lighting and light probes.
 - Added UBER integration to our deferred override shader.
@@ -557,12 +529,10 @@ Mods:
 - Changed the Weathered Blend shader to apply parallax to the base masks and normals.
 
 ## 3.2.1
-=====================
 Scripts:
 - Fixed incorrect gamma correction in Map packer to account for changes in Unity 5.1.
 
 ## 3.2.0
-=====================
 Shaders:
 - Added the "TriPlanar/Full" and "TriPlanar/Lite" shaders.
 - Added TriPlanar variants of "Terrain/4Splat" and "Vertex Blend/4Splat".
@@ -583,14 +553,12 @@ Mods:
 - Added the deferred-compatible Eyeball shader prototype.
 
 ## 3.1.2
-=====================
 Shaders:
 - Changed all instances of "_AlphaTestRef" property to "_Cutoff" to ensure compatibility with Unity 3.1's depth-normal pass replacement shader.
 - Fixed Oriented Blend and Core shaders to swap X & Z normal mapping and to properly convert Y on the underside of the object.
 - Fixed distant terrain shader to use Unity's renamed metallic texture property and roughness.
 
 ## 3.1.1
-=====================
 Shaders:
 - Added a new "Combined" tessellation mode that combines Phong and Displacement.
 - Fixed the GI code that caused weird noisy glitching artifacts on some MacOSX platforms.
@@ -599,7 +567,6 @@ Shaders:
 - Fixed the Substance Designer preview shaders' code that caused them to fail to compile on AMD GPUs.
 
 ## 3.1
-=====================
 Shaders:
 - Added "Directional Blend" shaders with support for blending around an arbitrary direction on the surface.
 - Added "Vertex Blend 4Splat" shaders with support for blending 4 splats using vertex colors.
@@ -646,7 +613,6 @@ Known Issues:
 - The visualize feature currently doesn't work properly for textures that use world-space UVs.
 
 ## 3.02
-=====================
 Shaders:
 - Changed to an optimized BRDF visibility function.
   * Toggle legacy behavior in the config header.
@@ -669,7 +635,6 @@ Integration:
   * Removed the Specular AA feature as it was never really working properly due to the lack of mipmap generation.
 
 ## 3.01
-=====================
 Shaders:  
 - Added support for tinting the base color with vertex colors.
 - Added a Mode dropdown to the Team Color feature to support explicitly turning off the alpha mask.
@@ -693,7 +658,6 @@ Integration:
   * Added Alpha translucency and cutout variants of the preview shader.
 
 ## 3.0 beta8
-=====================
 Shaders:  
 - Added a cutoff control the Hair Translucent shaders to allow control over the opaque regions for better sorting.
 - Modified all the Tessellation shaders to use their regular variants as fallbacks. 
@@ -705,7 +669,6 @@ Scripts:
 - Fixed our Terrain Packed Maps to correctly grab color info, rather than just a single channel.
   
 ## 3.0 beta7
-=====================
 Shaders: 
 - Added a new config option for higher quality IBL fresnel.
   * Currently disabled by default as we decide if we want to make it the new default. 
@@ -714,7 +677,6 @@ Shaders:
 - Fixed a bug in our Amplify Texture support code where we were using the wrong function when sampling normals.
 
 ## 3.0 beta6
-=====================
 Shaders: 
 - Changed the Particle shaders:
   * Added a rim fade feature to support light shaft effects.
@@ -723,7 +685,6 @@ Shaders:
 - Switched to using Unity RC3's new [Gamma] attribute for some input properties to save calculations inside the shaders.
 
 ## 3.0 beta5
-=====================
 Shaders: 
 - Changed the config header to add an option for enabling a minimum tessellation edge length property. 
   This can be globally set by a script to control the tessellation quality of all models.
@@ -734,7 +695,6 @@ Shaders:
   * If the base material has an alpha, it will alpha through or cutout the oriented material.  
 
 ## 3.0 beta4
-=====================
 Shaders: 
 - Changed surface shader API.
   * Added support for modifying vertices.
@@ -747,7 +707,6 @@ Scripts:
   * Fixed an issue with the visualize function where the underlying mesh would poke through on edges.
 
 ## 3.0 beta3
-=====================
 Shaders: 
 - Changed the Terrain shaders.
   * Restored the additional per-splat parameters and base layer.
@@ -762,7 +721,6 @@ Scripts:
   * Added a new control for Unity's LightmapEmissionProperty.
 
 ## 3.0 beta2
-=====================
 Shaders: 
 - Added "Oriented/Core" shaders
   * World-textured material.
@@ -789,7 +747,6 @@ Scripts:
   * Fixed a bug where it would render a color control for Vector properties.
 
 ## 3.0 beta1
-=====================
 Lighting:
 - Added support for both Point and Spot Spherical Area lights!
 - Modified Point and Spot lights to use Inverse Square physical attenuation.
@@ -905,7 +862,6 @@ Known issues:
 - Visualize feature does not work correctly when used with parallax or tessellation. 
 
 ## 2.1.2
-=====================
 Tools
 - Material Inspector
   * Changed the Visualize feature
@@ -922,7 +878,6 @@ Integration:
   * Updated Alloy to use Skyshop 1.11.
 
 ## 2.1.1
-=====================
 Integration:
 - Substance Designer
   * Updated Alloy preview shader to use the new SH diffuse lighting feature.
@@ -933,7 +888,6 @@ Bug Fixes:
 - Fixes issues when using skin shaders with Candela in deferred mode. 
 
 ## 2.1
-=====================
 Shaders
 - Added support for Parallax & Parallax Occlusion Mapping modes in "\Core" and "\Transparent\Cutout" shaders.
 - Added a TeamColor detail mode to the standard shaders.
@@ -979,19 +933,15 @@ The following shaders and paths are to be removed after this release:
 "Assets/Alloy/Core/Skin Bumped"
 
 ## 2.0.4
-=====================
 - EMERGENCY hotfix because I'm an idiot.
 
 ## 2.0.3
-=====================
 - Added beta Skin shader in Core set (Skin Bumped).
 
 ## 2.0.2
-=====================
 - Fixed inspector bug preventing custom cubes to be input.
 
 ## 2.0 
-=====================
 Shading Improvements
 - Increased Specular Power Range
 - Better Visibility Function - Treyarch Shlick Approximation
@@ -1033,7 +983,6 @@ Known Issues
 
 
 ## 1.01
-=====================
 - Standardized the API naming conventions to avoid name collisions when mixing shader libraries. This will break current user-created shaders, which will need to be updated to use the new API.
   * RimLight() -> aRimLight()
   * EPSILON -> A_EPSILON
