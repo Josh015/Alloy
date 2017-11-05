@@ -49,4 +49,3 @@ To use the Skin, SpeedTree, and/or Transmission shaders in deferred mode, you MU
 2. Change windows to the newly opened browser tab.
 
 Now you're ready to play!
-Getting Started:
