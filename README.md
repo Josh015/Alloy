@@ -1,11 +1,12 @@
-## Alloy
+# Alloy
 
 The most powerful, extensible, and accurate shading system for Unity, bringing ‘AAA’ graphics power to Unity games for Desktop, Console, Web and Next-gen Mobile.
 --------------------------------------------------------------------------------------------------------------------------------------
-Pre-Import Checklist
+
+## Pre-Import Checklist
 Alright, so we're ready to jump into some Alloy 3 goodness, but there's a few things we want to make sure we're ready for depending on what the state of your project is, and what past version of Alloy (if any) are in your project.
 First and foremost, if you are importing a new version of Alloy into a project where _any_ prior version of Alloy existed, it's probably a good idea to have a backup of it (manual or version controlled), just in case something goes awry.
---------------------------------------------------------------------------------------------------------------------------------------
+
 ### Import Steps
 1. Ensure you are in a new blank scene.
 2. ENSURE that there are NO script errors in your console preventing unity from recompiling assemblies. Alloy will NOT function properly (including our editor scripts), if you attempt to import with standing errors in your project.
@@ -13,8 +14,8 @@ First and foremost, if you are importing a new version of Alloy into a project w
 4. The first thing you'll notice in the Alloy folder is that there is a sub-directory called 'Packages'.Within this directory there will be a package named Alloy3xx_ShadersAndEditorCore. Import this package first.
 5. If you are a Windows user, and wish to use Alloy Tesselation Shaders (DX11 only), import the Alloy3xx_SM5Shaders folder. In general these shaders take a bit longer to compile/import, so we suggest only importing the variants you intend on using.
 6. Lastly, if you'd like to check out our shweet samples, import the Alloy3SampleAssets package. Enjoy!
---------------------------------------------------------------------------------------------------------------------------------------
-### Setting Up Your Project
+
+## Setting Up Your Project
 Before using Alloy, there a couple things you MUST set up in your project:
 
 1. Open Edit->Project Settings->Graphics.
@@ -33,8 +34,8 @@ Before using Alloy, there a couple things you MUST set up in your project:
 13. Ensure 'Anti-aliasing' on the Quality Setting your are using is set to 'none', or HDR will be silently disabled on your camera (ಠ_ಠ THANKS UNITY ಠ_ಠ).
 14. Go to Window->Alloy->Light Migrator and wait for it to finish updating your scene's existing lights.
 15. Now save your scene.
---------------------------------------------------------------------------------------------------------------------------------------
-### Advanced Setup
+
+## Advanced Setup
 To use the Skin, SpeedTree, and/or Transmission shaders in deferred mode, you MUST do the following:
 
 1. Open Edit->Project Settings->Graphics.
@@ -46,8 +47,8 @@ To use the Skin, SpeedTree, and/or Transmission shaders in deferred mode, you MU
 5. Add the component "Alloy/Alloy Effects Manager".
 6. Add or remove the "Skin Scattering" and/or "Transmission" tabs to reduce cost.
 7. Set your materials to the "Alloy/Human/Skin" or "Alloy/Transmission/*" shaders.
---------------------------------------------------------------------------------------------------------------------------------------
-### Documentation
+
+## Documentation
 1. Go to Window->Alloy->Documentation.
 2. Change windows to the newly opened browser tab.
 
