@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: ed3e776e253505f4fbd92eb1911f93a1
+ShaderImporter:
+  defaultTextures:
+  - _DissolveTex: {instanceID: 0}
+  - _MainTex: {instanceID: 0}
+  - _BumpMap: {instanceID: 0}
+  - _MaterialMap: {instanceID: 0}
+  - _ParallaxMap: {instanceID: 0}
+  - _DecalTex: {instanceID: 0}
+  - _DecalTexBumpMap: {instanceID: 0}
+  - _DecalTexMaterialMap: {instanceID: 0}
+  - _IncandescenceMask: {instanceID: 0}
+  - _IncandescenceMap: {instanceID: 0}
+  - _RimTex: {instanceID: 0}
+  - _Rsrm: {fileID: 2800000, guid: d2a248fb193051d4193489be79513ee6, type: 3}
+  - _Cube: {instanceID: 0}
+  - _SpecCubeIBL: {instanceID: 0}
+  userData: 

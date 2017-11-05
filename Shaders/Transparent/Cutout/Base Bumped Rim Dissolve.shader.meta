@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 22f561fc38661314880021d9b92aaa0c
+ShaderImporter:
+  defaultTextures:
+  - _DissolveTex: {instanceID: 0}
+  - _MainTex: {instanceID: 0}
+  - _BumpMap: {instanceID: 0}
+  - _MaterialMap: {instanceID: 0}
+  - _ParallaxMap: {instanceID: 0}
+  - _RimTex: {instanceID: 0}
+  - _Rsrm: {fileID: 2800000, guid: d2a248fb193051d4193489be79513ee6, type: 3}
+  - _Cube: {instanceID: 0}
+  - _SpecCubeIBL: {instanceID: 0}
+  userData: 
