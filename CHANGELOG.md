@@ -224,7 +224,7 @@
 * Updated Substance Painter custom shader to support version 2.2.
 
 ## 3.4.1
-NOTE: 
+_NOTE:_
 * You must run the new Material Migrator tool in each of your scenes to clean up and replace old keywords.
    + Open Window->Alloy->Material Migrator.
    + After it finishes, hit Ctrl+S.
@@ -902,7 +902,7 @@ Bug Fixes:
 * Added support for Skyshop 1.07 and up.
    + Box projection is now accessed through skyshop's sky manager UI.
    + Added support for sky blending.
-   + PLEASE NOTE: Alloy will no longer work with older versions of Skyshop due to changes in how they do their calculations.
+   + _PLEASE NOTE:_ Alloy will no longer work with older versions of Skyshop due to changes in how they do their calculations.
 * Changed the custom editor parameter names and order to improve readability.
 * Fixed an issue where the misnamed Decal material map parameter prevented it from showing up in our custom editor.
 * Fixed an issue where we weren’t gamma-correcting the transition glow intensity in the Transition shaders.
@@ -917,7 +917,7 @@ Bug Fixes:
    + Capped to not exceed texture's dimensions.
 * Fixed issue where user could accidentally set the packed textures to an invalid format.
 
-NOTE: It is also possible to set the Aniso level, in case you didn't know.
+_NOTE:_ It is also possible to set the Aniso level, in case you didn't know.
 
 ### Substance Designer
 * SD4.1 shader fix so it no longer manually gamma-corrects the environment map. 
