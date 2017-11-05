@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 /////////////////////////////////////////////////////////////////////////////////
 /// @file Eye.cginc
 /// @brief Eye parallax, layer control, etc.
@@ -14,14 +18,6 @@
     #ifndef A_VIEW_DIR_TANGENT_ON
         #define A_VIEW_DIR_TANGENT_ON
     #endif
-
-    #ifndef A_METALLIC_ON
-        #define A_METALLIC_ON
-    #endif
-
-    #if !defined(A_AMBIENT_OCCLUSION_ON) && !defined(A_ROUGHNESS_SOURCE_BASE_COLOR_ALPHA)
-        #define A_AMBIENT_OCCLUSION_ON
-    #endif
 #endif
 
 #include "Assets/Alloy/Shaders/Framework/Feature.cginc"
@@ -34,10 +30,6 @@
     /// Cornea normal map.
     /// Expects a compressed normal map.
     sampler2D _CorneaNormalMap;
-
-    /// Cornea metallic.
-    /// Expects values in the range [0,1].
-    half _CorneaMetallic;
 
     /// Cornea specularity.
     /// Expects values in the range [0,1].
@@ -70,23 +62,19 @@
     /// Expects values in the range [0.01,n].
     half _IrisScatterPower;
 
-    /// Sclera tint color.
+    /// Schlera tint color.
     /// Expects a linear LDR color.
     half3 _ScleraColor;
 
-    /// Sclera metallic.
-    /// Expects values in the range [0,1].
-    half _ScleraMetallic;
-
-    /// Sclera specularity.
+    /// Schlera specularity.
     /// Expects values in the range [0,1].
     half _ScleraSpecularity;
 
-    /// Sclera roughness.
+    /// Schlera roughness.
     /// Expects values in the range [0,1].
     half _ScleraRoughness;
 
-    /// Sclera normal map XY scale.
+    /// Schlera normal map XY scale.
     half _ScleraNormalMapScale;
 #endif
 
@@ -117,7 +105,8 @@ void aEye(
     // Iris.
     half3 irisBump = aSampleBumpScale(s, lerp(_ScleraNormalMapScale, 1.0h, irisMask));
     half irisNdotV = irisMask * aDotClamp(irisBump, s.viewDirTangent);
-
+    
+    irisBump = normalize(lerp(irisBump, A_FLAT_NORMAL, irisMask));
     s.baseColor += (_IrisScatterIntensity * pow(aLuminance(base) * irisNdotV, _IrisScatterPower)).rrr;
     s.baseColor *= aLerpOneTo(pow(irisNdotV, _IrisShadowing), irisMask);
     s.baseColor *= _Color * aBaseVertexColorTint(s) * lerp(_ScleraColor, _IrisColor, irisMask);
@@ -130,19 +119,9 @@ void aEye(
     half3 corneaBump = UnpackScaleNormal(tex2D(_CorneaNormalMap, s.baseUv), _CorneaNormalMapScale);
 
     s.baseColor = lerp(s.baseColor, _CorneaColor, irisMask * _CorneaColor.a);
-    s.metallic = lerp(_ScleraMetallic, _CorneaMetallic * _CorneaColor.a, irisMask);
     s.specularity = lerp(_ScleraSpecularity, _CorneaSpecularity, irisMask);
     s.roughness = lerp(_ScleraRoughness, _CorneaRoughness, irisMask);
-    s.normalTangent = A_NT(s, BlendNormals(corneaBump, lerp(irisBump, A_FLAT_NORMAL, irisMask)));
-
-    #ifndef A_ROUGHNESS_SOURCE_BASE_COLOR_ALPHA   
-        half4 material = aSampleMaterial(s);
-
-        s.metallic *= material.A_METALLIC_CHANNEL;
-        s.ambientOcclusion = material.A_AO_CHANNEL;
-        s.specularity *= material.A_SPECULARITY_CHANNEL;
-        s.roughness *= material.A_ROUGHNESS_CHANNEL;
-    #endif
+    s.normalTangent = A_NT(s, BlendNormals(irisBump, corneaBump));
     
     // Iris mask on outside effects.
     s.mask = 1.0h - irisMask;

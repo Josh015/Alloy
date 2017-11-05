@@ -1,5 +1,10 @@
-﻿using UnityEditor;
+﻿// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
+using UnityEditor;
 using UnityEngine;
+
 
 [CustomPropertyDrawer(typeof(MinValueAttribute))]
 public class MinValueDrawer : PropertyDrawer {

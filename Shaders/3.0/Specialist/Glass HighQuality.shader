@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 Shader "Alloy/Glass/HighQuality" {
 Properties {
     [Toggle(EFFECT_BUMP)]
@@ -197,7 +201,7 @@ SubShader {
         #pragma shader_feature _WETNESS_ON
         #pragma shader_feature _WETMASKSOURCE_VERTEXCOLORALPHA
         
-        //#pragma multi_compile __ LOD_FADE_CROSSFADE
+        //#pragma multi_compile __ LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
         #pragma multi_compile_instancing
         //#pragma multi_compile __ VTRANSPARENCY_ON
 
@@ -239,7 +243,7 @@ SubShader {
         #pragma shader_feature _ _SPECULARHIGHLIGHTS_OFF
         #pragma shader_feature _ _GLOSSYREFLECTIONS_OFF
         
-        //#pragma multi_compile __ LOD_FADE_CROSSFADE
+        //#pragma multi_compile __ LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
         #pragma multi_compile_fwdbase
         #pragma multi_compile_fog
         #pragma multi_compile_instancing
@@ -281,7 +285,7 @@ SubShader {
         #pragma shader_feature _WETMASKSOURCE_VERTEXCOLORALPHA
         #pragma shader_feature _ _SPECULARHIGHLIGHTS_OFF
         
-        //#pragma multi_compile __ LOD_FADE_CROSSFADE
+        //#pragma multi_compile __ LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
         #pragma multi_compile_fwdadd_fullshadows
         #pragma multi_compile_fog
         //#pragma multi_compile __ VTRANSPARENCY_ON

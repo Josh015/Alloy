@@ -1,45 +1,5 @@
 # Changelog
 
-## 4.2.0
-### Shaders
-* Added Unity 2017.2 support.
-
-## 4.1.1
-### Shaders
-* Changed "Eye" shaders to add Roughness Source, Cornea Metallic, and Sclera Metallic properties.
-   + "Property" option which applies just the roughness sliders without the roughness map.
-   + You may need to manually disable the material map property in your materials.
-* Changed "Car Paint" shaders to add a secondary color map mode.
-* Changed "Car Paint" shaders to add a Roughness Source dropdown.
-   + "Property" option which applies just the roughness slider without the roughness map.
-* Fixed visualize not applying parent texture transforms to children.
-* Fixed "Directional Blend" shaders to stop popping issue between edit and play mode.
-   + World is now the default mapping mode.
-   + You must run the Material Migrator tool exactly once to fix existing materials. 
-* Fixed "TriPlanar" shaders to stop popping issue between edit and play mode.
-   + World is now the default mapping mode.
-   + You must run the Material Migrator tool exactly once to fix existing materials. 
-* Fixed "Vertex Blend" shaders to stop popping issue between edit and play mode.
-   + World is now the default mapping mode.
-   + You must run the Material Migrator tool exactly once to fix existing materials. 
-
-### Mods
-* Fixed "Deferred Decal Advanced" shader so that:
-   + The shader actually compiles.
-   + Base Color and Normals blend sliders work now.
-   + Surface material type is no longer overwritten.
-   + Surface shadow masks are no longer overwritten.
-   + Decal specular occlusion now combines with the surface specular occlusion rather than replacing it.
-
-## 4.1.0
-### Shaders
-* Added Unity 2017.1 support.
-* Fixed "SpeedTree*" shaders to have Unity-recommended instancing limit.
-* Removed LOD_FADE_PERCENTAGE crossfade mode.
-
-### Scripts
-* Added Unity 2017.1 support.
-
 ## 3.6.4
 ### Scripts
 * Fixed issue where Unity static Area Lights' scene GUIs were not appearing after installing Alloy.

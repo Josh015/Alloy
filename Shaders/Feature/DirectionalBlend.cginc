@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 /////////////////////////////////////////////////////////////////////////////////
 /// @file DirectionalBlend.cginc
 /// @brief Allows blending based how much a normal faces a given direction.
@@ -7,8 +11,12 @@
 #define ALLOY_SHADERS_FEATURE_DIRECTIONAL_BLEND_CGINC
 
 #ifdef A_DIRECTIONAL_BLEND_ON
-    #ifdef _DIRECTIONALBLENDMODE_OBJECT
-        #define A_WORLD_TO_OBJECT_ON
+    #ifndef _DIRECTIONALBLENDMODE_WORLD
+        #ifdef A_DIRECTIONAL_BLEND_MODE_OFF
+            #define _DIRECTIONALBLENDMODE_WORLD
+        #else
+            #define A_WORLD_TO_OBJECT_ON
+        #endif
     #endif
 
     #ifndef A_NORMAL_WORLD_ON
@@ -44,7 +52,7 @@ void aDirectionalBlend(
     inout ASurface s)
 {
 #ifdef A_DIRECTIONAL_BLEND_ON    
-    #ifndef _DIRECTIONALBLENDMODE_OBJECT
+    #ifdef _DIRECTIONALBLENDMODE_WORLD
         half3 normal = s.normalWorld;
     #else
         half3 normal = UnityWorldToObjectDir(s.normalWorld);

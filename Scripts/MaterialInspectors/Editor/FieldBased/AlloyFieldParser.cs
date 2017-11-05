@@ -1,4 +1,8 @@
-﻿using UnityEditor.AnimatedValues;
+﻿// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
+using UnityEditor.AnimatedValues;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,6 +65,7 @@ public class AlloyFieldDrawerArgs {
 	public AlloyFieldBasedEditor Editor;
 	public AlloyTabGroup TabGroup;
 	public Material[] Materials;
+	public MaterialProperty[] Properties;
 	public List<string> PropertiesSkip = new List<string>();
 	public string CurrentTab;
 	public int MatInst;
@@ -68,6 +73,10 @@ public class AlloyFieldDrawerArgs {
 	public List<AlloyTabAdd> TabsToAdd = new List<AlloyTabAdd>();
 	public string[] AllTabNames;
 	public Dictionary<string, AnimBool> OpenCloseAnim;
+
+	public MaterialProperty GetMaterialProperty(string velName) {
+		return Properties.FirstOrDefault(p => p.name == velName);
+	}
 }
 
 public class AlloyTabAdd {
@@ -87,11 +96,7 @@ public abstract class AlloyFieldDrawer {
 	protected MaterialEditor MatEditor;
 
 	protected void BeginMaterialProperty(MaterialProperty property) {
-    #if UNITY_2017_1_OR_NEWER
-        MatEditor.BeginAnimatedCheck(Rect.zero, Property);
-    #else
-        MatEditor.BeginAnimatedCheck(Property);
-    #endif
+		MatEditor.BeginAnimatedCheck(Property);
 		EditorGUI.BeginChangeCheck();
 		EditorGUI.showMixedValue = Property.hasMixedValue;
 	}
@@ -143,7 +148,7 @@ public abstract class AlloyFieldDrawer {
 		return args.DoDraw && !args.PropertiesSkip.Contains(Property.name);
 	}
 
-	public virtual void OnSceneGUI(AlloyFieldBasedEditor editor, Material[] materials) {
+	public virtual void OnSceneGUI(Material[] materials) {
 	}
 
 	public virtual void OnDisable() {

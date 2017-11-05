@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 /////////////////////////////////////////////////////////////////////////////////
 /// @file DeferredDecal.cginc
 /// @brief Deferred Decal surface shader definition.
@@ -33,7 +37,7 @@ void aColorShader(
     inout half4 color,
     ASurface s)
 {
-    aStandardColorShader(color, s);
+    aStandardColorShader(v);
 }
 
 void aGbufferShader(
@@ -41,13 +45,23 @@ void aGbufferShader(
     ASurface s)
 {
 #ifdef A_DECAL_ALPHA_FIRSTPASS_SHADER
-    gb.diffuseOcclusion.a = s.decalMask2 * _BaseColorWeight; // Assumes blend mode excludes alpha.
+    gb.diffuseOcclusion.a = s.decalMask2;
     gb.specularSmoothness.a = s.opacity;
-    gb.normalType.a = s.opacity * _NormalsWeight; // Assumes blend mode excludes alpha.
+    gb.normalType.a = s.opacity;
     gb.emissionSubsurface.a = s.decalMask2;
+
+    #ifdef A_SHADOW_MASKS_BUFFER_ON
+        gb.shadowMasks.a = s.opacity;
+    #endif
 #else
-    gb.diffuseOcclusion.a = aLerpOneTo(gb.diffuseOcclusion.a, s.opacity); // Decal SO will combine with surface SO.
+    gb.diffuseOcclusion.a *= s.decalMask2;
     gb.specularSmoothness.a *= s.opacity;
+    gb.normalType.a *= s.opacity;
+    gb.emissionSubsurface.a *= s.decalMask2; // TODO: Apply AO to emission for outside areas' ambient.
+
+    #ifdef A_SHADOW_MASKS_BUFFER_ON
+        gb.shadowMasks.a *= s.opacity;
+    #endif
 #endif
 }
 
@@ -63,7 +77,7 @@ void aSurfaceShader(
     half4 material = aSampleMaterial(s);
     
     s.opacity = _Color.a * material.A_SPECULARITY_CHANNEL;
-    s.emissiveColor = _GlowColor;
+    //s.emissiveColor = _GlowColor * material.A_METALLIC_CHANNEL;
     s.decalMask2 = material.A_METALLIC_CHANNEL;
     
     s.metallic = _Metal;

@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 Shader "Alloy/Legacy/Tessellation/Vertex Blend/4Splat TriPlanar" {
 Properties {
     // Global Settings
@@ -56,8 +60,8 @@ Properties {
     
     // Triplanar
     _TriplanarProperties ("'Triplanar' {Section:{Color:4}}", Float) = 0
-    [Toggle(_TRIPLANARMODE_OBJECT)]
-    _TriplanarMode ("'Mode' {Dropdown:{World:{}, Object:{}}}", Float) = 0
+    [Toggle(_TRIPLANARMODE_WORLD)]
+    _TriplanarMode ("'Mode' {Dropdown:{Object:{}, World:{}}}", Float) = 1
     _TriplanarBlendSharpness ("'Sharpness' {Min:1, Max:50}", Float) = 2
     
     // Tessellation
@@ -134,14 +138,14 @@ SubShader {
         
         #pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
         #pragma shader_feature EFFECT_BUMP
-        #pragma shader_feature _TRIPLANARMODE_OBJECT
+        #pragma shader_feature _TRIPLANARMODE_WORLD
         #pragma shader_feature _AO2_ON
         #pragma shader_feature _DETAIL_MULX2
         #pragma shader_feature _DECAL_ON
         #pragma shader_feature _ _SPECULARHIGHLIGHTS_OFF
         #pragma shader_feature _ _GLOSSYREFLECTIONS_OFF
         
-        //#pragma multi_compile __ LOD_FADE_CROSSFADE
+        //#pragma multi_compile __ LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
         #pragma multi_compile_fwdbase
         #pragma multi_compile_fog
         #pragma multi_compile_instancing
@@ -173,13 +177,13 @@ SubShader {
                 
         #pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
         #pragma shader_feature EFFECT_BUMP
-        #pragma shader_feature _TRIPLANARMODE_OBJECT
+        #pragma shader_feature _TRIPLANARMODE_WORLD
         #pragma shader_feature _AO2_ON
         #pragma shader_feature _DETAIL_MULX2
         #pragma shader_feature _DECAL_ON
         #pragma shader_feature _ _SPECULARHIGHLIGHTS_OFF
         
-        //#pragma multi_compile __ LOD_FADE_CROSSFADE
+        //#pragma multi_compile __ LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
         #pragma multi_compile_fwdadd_fullshadows
         #pragma multi_compile_fog
         //#pragma multi_compile __ VTRANSPARENCY_ON
@@ -206,7 +210,7 @@ SubShader {
         #pragma exclude_renderers gles
 
         #pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
-        #pragma shader_feature _TRIPLANARMODE_OBJECT
+        #pragma shader_feature _TRIPLANARMODE_WORLD
         
         #pragma multi_compile_shadowcaster
         #pragma multi_compile_instancing
@@ -234,13 +238,13 @@ SubShader {
 
         #pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
         #pragma shader_feature EFFECT_BUMP
-        #pragma shader_feature _TRIPLANARMODE_OBJECT
+        #pragma shader_feature _TRIPLANARMODE_WORLD
         #pragma shader_feature _AO2_ON
         #pragma shader_feature _DETAIL_MULX2
         #pragma shader_feature _DECAL_ON
         #pragma shader_feature _ _GLOSSYREFLECTIONS_OFF
         
-        //#pragma multi_compile __ LOD_FADE_CROSSFADE
+        //#pragma multi_compile __ LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
         #pragma multi_compile_prepassfinal
         #pragma skip_variants FOG_LINEAR FOG_EXP FOG_EXP2
         #pragma multi_compile_instancing
@@ -268,7 +272,7 @@ SubShader {
         //#pragma target 4.6
         #pragma exclude_renderers nomrt gles
         
-        #pragma shader_feature _TRIPLANARMODE_OBJECT
+        #pragma shader_feature _TRIPLANARMODE_WORLD
         #pragma shader_feature _DETAIL_MULX2
         #pragma shader_feature _DECAL_ON
         

@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 /////////////////////////////////////////////////////////////////////////////////
 /// @file Shadow.cginc
 /// @brief Forward shadow pass vertex & fragment shaders.
@@ -13,15 +17,20 @@
 #endif
 
 // Need to output UVs in shadow caster, since we need to sample texture and do clip/dithering based on it
-#if !defined(A_OPACITY_MASK_ON) && !defined(_ALPHATEST_ON) && !defined(A_ALPHA_BLENDING_ON)
+#if !defined(INSTANCING_ON) && !defined(A_OPACITY_MASK_ON) && !defined(_ALPHATEST_ON) && !defined(A_ALPHA_BLENDING_ON)
     #define A_SURFACE_SHADER_OFF
+#endif
+
+// Has a non-empty shadow caster output struct (it's an error to have empty structs on some platforms...)
+#if defined(V2F_SHADOW_CASTER_NOPOS_IS_EMPTY) && defined(A_SURFACE_SHADER_OFF)
+    #define A_VERTEX_TO_FRAGMENT_OFF
 #endif
 
 #define A_TESSELLATION_PASS
 #define A_INSTANCING_PASS
 
-#ifndef UNITY_STANDARD_USE_DITHER_MASK
-    #define A_CROSSFADE_PASS
+#ifdef UNITY_STEREO_INSTANCING_ENABLED
+    #define A_STEREO_INSTANCING_PASS
 #endif
 
 #define A_FORWARD_TEXCOORD0 V2F_SHADOW_CASTER_NOPOS
@@ -32,29 +41,44 @@
     sampler3D _DitherMaskLOD;
 #endif
 
+// We have to do these dances of outputting SV_POSITION separately from the vertex shader,
+// and inputting VPOS in the pixel shader, since they both map to "POSITION" semantic on
+// some platforms, and then things don't go well.
+
 void aMainVertexShader(
     AVertexInput v,
-    out AFragmentInput o)
+#ifndef A_VERTEX_TO_FRAGMENT_OFF
+    out AFragmentInput o,
+#endif
+    out float4 opos : SV_POSITION)
 {
-    aForwardVertexShader(v, o);
-    TRANSFER_SHADOW_CASTER_NOPOS(o, o.pos) // Implicitly expects 'v' parameter.
+#ifndef A_SURFACE_SHADER_OFF
+    aForwardVertexShader(v, o, opos);
+#endif
+    TRANSFER_SHADOW_CASTER_NOPOS(o, opos) // Implicitly expects 'v' parameter.
 }
 
 half4 aMainFragmentShader(
+#ifndef A_VERTEX_TO_FRAGMENT_OFF
     AFragmentInput i
-    A_FACING_SIGN_PARAM) : SV_Target
-{    
-    ASurface s = aForwardSurface(i, A_FACING_SIGN);
-
+#endif
 #ifdef UNITY_STANDARD_USE_DITHER_MASK
-    // Use dither mask for alpha blended shadows, based on pixel position xy
-    // and alpha level. Our dither texture is 4x4x16.
-    #ifdef LOD_FADE_CROSSFADE
-        alpha *= unity_LODFade.y;
+    , UNITY_VPOS_TYPE vpos : VPOS
+#endif
+#ifndef A_VERTEX_TO_FRAGMENT_OFF
+    A_FACING_SIGN_PARAM
+#endif
+    ) : SV_Target
+{
+#ifndef A_SURFACE_SHADER_OFF
+    ASurface s = aForwardSurface(i, A_FACING_SIGN);
+    
+    #ifdef UNITY_STANDARD_USE_DITHER_MASK
+        // Use dither mask for alpha blended shadows, based on pixel position xy
+        // and alpha level. Our dither texture is 4x4x16.
+        half alphaRef = tex3D(_DitherMaskLOD, float3(vpos.xy * 0.25f, s.opacity * 0.9375f)).a;
+        clip(alphaRef - 0.01h);
     #endif
-
-    half alphaRef = tex3D(_DitherMaskLOD, float3(i.pos.xy * 0.25f, s.opacity * 0.9375f)).a;
-    clip(alphaRef - 0.01h);
 #endif
 
     SHADOW_CASTER_FRAGMENT(i)

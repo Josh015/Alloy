@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
+using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
@@ -55,29 +59,12 @@ public class AlloyFieldBasedEditor : AlloyInspectorBase {
 
 	static HashSet<string> s_knownNulls = new HashSet<string>();
 
-	Dictionary<string, MaterialProperty> m_stringToProperty = new Dictionary<string, MaterialProperty>();
-
-	public MaterialProperty GetMaterialProperty(string name) {
-		MaterialProperty prop;
-		if (!m_stringToProperty.TryGetValue(name, out prop)) {
-			return null;
-		}
-		return prop;
-	}
-
 	protected override void OnAlloyShaderGUI(MaterialProperty[] properties) {
 		//Refresh drawer structure if needed
 		bool structuralChange = false;
 		if (m_fieldDrawers == null || m_fieldDrawers.Length != properties.Length) {
 			m_fieldDrawers = new AlloyFieldDrawer[properties.Length];
 			structuralChange = true;
-		}
-
-		//Rebuild name -> prop cache
-		m_stringToProperty.Clear();
-		for (int i = 0; i < properties.Length; ++i) {
-			string propName = properties[i].name;
-			m_stringToProperty.Add(propName, properties[i]);
 		}
 
 		for (int i = 0; i < properties.Length; ++i) {
@@ -122,12 +109,14 @@ public class AlloyFieldBasedEditor : AlloyInspectorBase {
 		var args = new AlloyFieldDrawerArgs {
 			Editor = this,
 			Materials = Targets.Cast<Material>().ToArray(),
+			Properties = properties,
 			PropertiesSkip = new List<string>(),
 			MatInst = MatInst,
 			TabGroup = TabGroup,
 			AllTabNames = m_allTabs,
 			OpenCloseAnim = m_openCloseAnim
 		};
+
 
 		for (var i = 0; i < m_fieldDrawers.Length; i++) {
 			var drawer = m_fieldDrawers[i];
@@ -162,11 +151,9 @@ public class AlloyFieldBasedEditor : AlloyInspectorBase {
 	}
 
 	public override void OnAlloySceneGUI(SceneView sceneView) {
-		Material[] allMaterials = Targets.Cast<Material>().ToArray();
-
 		foreach (var drawer in m_fieldDrawers) {
 			if (drawer != null) {
-				drawer.OnSceneGUI(this, allMaterials);
+				drawer.OnSceneGUI(Targets.Cast<Material>().ToArray());
 			}
 		}
     }
@@ -174,8 +161,7 @@ public class AlloyFieldBasedEditor : AlloyInspectorBase {
     private void RepaintScene() {
         var lastSceneView = SceneView.lastActiveSceneView;
 
-	    if (lastSceneView != null) {
-		    lastSceneView.Repaint();
-	    }
+        if (lastSceneView != null)
+            lastSceneView.Repaint();
     }
 }

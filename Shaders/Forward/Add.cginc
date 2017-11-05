@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 /////////////////////////////////////////////////////////////////////////////////
 /// @file Add.cginc
 /// @brief Forward add lighting pass vertex & fragment shaders.
@@ -12,15 +16,15 @@
 #define A_DIRECT_LIGHTING_PASS
 #define A_VOLUMETRIC_PASS
 #define A_ALPHA_BLENDING_PASS
-#define A_CROSSFADE_PASS
 
 #include "Assets/Alloy/Shaders/Framework/Forward.cginc"
 
 void aMainVertexShader(
     AVertexInput v,
-    out AFragmentInput o)
+    out AFragmentInput o,
+    out float4 opos : SV_POSITION)
 {
-    aForwardVertexShader(v, o);
+    aForwardVertexShader(v, o, opos);
 }
 
 half4 aMainFragmentShader(

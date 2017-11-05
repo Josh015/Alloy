@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @file SpeedTree.cginc
 /// @brief SpeedTree shader type callbacks.
@@ -24,6 +28,10 @@
 
 #ifndef A_AMBIENT_OCCLUSION_ON
     #define A_AMBIENT_OCCLUSION_ON
+#endif
+
+#ifndef A_OPACITY_MASK_ON
+    #define A_OPACITY_MASK_ON
 #endif
 
 #define ENABLE_WIND

@@ -1,4 +1,8 @@
-﻿using System.Linq;
+﻿// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -47,15 +51,6 @@ public class AlloyEnableInstancingDrawer : AlloyFieldDrawer {
     }
 
     public AlloyEnableInstancingDrawer(AlloyInspectorBase editor, MaterialProperty property) : base(editor, property) {
-    }
-}
-
-public class AlloyDoubleSidedGiDrawer : AlloyFieldDrawer {
-    public override void Draw(AlloyFieldDrawerArgs args) {
-        args.Editor.MatEditor.DoubleSidedGIField();
-    }
-
-    public AlloyDoubleSidedGiDrawer(AlloyInspectorBase editor, MaterialProperty property) : base(editor, property) {
     }
 }
 

@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @file DecalAdditive.cginc
 /// @brief Additive decal shader type callbacks.

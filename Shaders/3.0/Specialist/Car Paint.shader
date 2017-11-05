@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 Shader "Alloy/Car Paint" {
 Properties {
     // Global Settings
@@ -9,8 +13,6 @@ Properties {
     _Cutoff ("'Opacity Cutoff' {Min:0, Max:1}", Float) = 0.5
     [Toggle(EFFECT_BUMP)]
     _HasBumpMap ("'Normals Source' {Dropdown:{VertexNormals:{_BumpMap,_BumpScale,_DetailNormalMap,_DetailNormalMapScale,_WetNormalMap,_WetNormalMapScale}, NormalMaps:{}}}", Float) = 1
-    [Toggle(_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A)]
-    _MainRoughnessSource ("'Roughness Source' {Dropdown:{PackedMapAlpha:{}, Property:{_SpecTex,_Occlusion}}}", Float) = 0
     
     // Car Paint Textures
     _MainTextures ("'Car Paint Textures' {Section:{Color:0}}", Float) = 0
@@ -38,11 +40,8 @@ Properties {
     
     // Paint 
     _PaintProperties ("'Paint' {Section:{Color:2}}", Float) = 0
-    [Toggle(_PAINTSECONDARYSOURCE_COLORMAP)]
-    _PaintSecondarySource ("'Secondary Source' {Dropdown:{BaseColor:{_CarSecondaryColorMap}, ColorMap:{}}}", Float) = 0
-    _CarSecondaryColorMap ("'Secondary Color(RGB)' {Visualize:{RGB}, Parent:_MainTex}", 2D) = "white" {}
-    _CarPrimaryColor ("'Primary Tint' {}", Color) = (1,1,1)
-    _CarSecondaryColor ("'Secondary Tint' {}", Color) = (1,1,1)
+    _CarPrimaryColor ("'Primary Color' {}", Color) = (1,1,1)
+    _CarSecondaryColor ("'Secondary Color' {}", Color) = (1,1,1)
     _CarSecondaryColorWeight ("'Blend Weight' {Min:0, Max:1}", Float) = 1
     _CarSecondaryColorFalloff ("'Blend Falloff' {Min:0, Max:1}", Float) = 1
     
@@ -203,8 +202,6 @@ SubShader {
         
         #pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
         #pragma shader_feature EFFECT_BUMP
-        #pragma shader_feature _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
-        #pragma shader_feature _PAINTSECONDARYSOURCE_COLORMAP
         #pragma shader_feature _PARALLAXMAP
         #pragma shader_feature _BUMPMODE_POM
         #pragma shader_feature _AO2_ON
@@ -220,7 +217,7 @@ SubShader {
         #pragma shader_feature _ _SPECULARHIGHLIGHTS_OFF
         #pragma shader_feature _ _GLOSSYREFLECTIONS_OFF
         
-        //#pragma multi_compile __ LOD_FADE_CROSSFADE
+        //#pragma multi_compile __ LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
         #pragma multi_compile_fwdbase
         #pragma multi_compile_fog
         #pragma multi_compile_instancing
@@ -250,8 +247,6 @@ SubShader {
         
         #pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
         #pragma shader_feature EFFECT_BUMP
-        #pragma shader_feature _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
-        #pragma shader_feature _PAINTSECONDARYSOURCE_COLORMAP
         #pragma shader_feature _PARALLAXMAP
         #pragma shader_feature _BUMPMODE_POM
         #pragma shader_feature _AO2_ON
@@ -264,7 +259,7 @@ SubShader {
         #pragma shader_feature _WETMASKSOURCE_VERTEXCOLORALPHA
         #pragma shader_feature _ _SPECULARHIGHLIGHTS_OFF
         
-        //#pragma multi_compile __ LOD_FADE_CROSSFADE
+        //#pragma multi_compile __ LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
         #pragma multi_compile_fwdadd_fullshadows
         #pragma multi_compile_fog
         //#pragma multi_compile __ VTRANSPARENCY_ON
@@ -289,7 +284,6 @@ SubShader {
         #pragma exclude_renderers gles
 
         #pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
-        #pragma shader_feature _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
         #pragma shader_feature _DISSOLVE_ON
         
         #pragma multi_compile_shadowcaster
@@ -316,8 +310,6 @@ SubShader {
         
         #pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
         #pragma shader_feature EFFECT_BUMP
-        #pragma shader_feature _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
-        #pragma shader_feature _PAINTSECONDARYSOURCE_COLORMAP
         #pragma shader_feature _PARALLAXMAP
         #pragma shader_feature _BUMPMODE_POM
         #pragma shader_feature _AO2_ON
@@ -332,7 +324,7 @@ SubShader {
         #pragma shader_feature _WETMASKSOURCE_VERTEXCOLORALPHA
         #pragma shader_feature _ _GLOSSYREFLECTIONS_OFF
         
-        //#pragma multi_compile __ LOD_FADE_CROSSFADE
+        //#pragma multi_compile __ LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
         #pragma multi_compile_prepassfinal
         #pragma skip_variants FOG_LINEAR FOG_EXP FOG_EXP2
         #pragma multi_compile_instancing
@@ -357,8 +349,7 @@ SubShader {
         CGPROGRAM
         #pragma target 3.0
         #pragma exclude_renderers nomrt gles
-
-        #pragma shader_feature _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+        
         #pragma shader_feature _DETAIL_MULX2
         #pragma shader_feature _NORMALMAP
         #pragma shader_feature _TEAMCOLOR_ON

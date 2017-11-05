@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 /////////////////////////////////////////////////////////////////////////////////
 /// @file OrientedTextures.cginc
 /// @brief Secondary set of textures using world/object position XZ as their UVs.
@@ -9,6 +13,10 @@
 #ifdef A_ORIENTED_TEXTURES_ON
     #ifndef A_TRIPLANAR_MAPPING_ON
         #define A_TRIPLANAR_MAPPING_ON
+    #endif
+
+    #ifndef _TRIPLANARMODE_WORLD
+        #define _TRIPLANARMODE_WORLD
     #endif
 
     #ifndef A_NORMAL_WORLD_ON

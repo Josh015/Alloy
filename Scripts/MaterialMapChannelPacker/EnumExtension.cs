@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 namespace Alloy {
 	public class EnumFlagsAttribute : PropertyAttribute {
 	}
@@ -15,4 +16,5 @@ namespace Alloy {
 			return (keysVal & flagVal) == flagVal;
 		}
 	}
+
 }

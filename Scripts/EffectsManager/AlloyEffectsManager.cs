@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
+using System;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -240,7 +244,7 @@ public class AlloyEffectsManager : MonoBehaviour {
                 m_renderBlurredNormals.Blit(pingRT, outputRT, m_deferredBlurredNormalsMaterial, 3);
 
                 // Cleanup.
-                //m_renderBlurredNormals.ReleaseTemporaryRT(outputRT); // Hold until after lights rendered.
+                m_renderBlurredNormals.ReleaseTemporaryRT(outputRT);
                 m_renderBlurredNormals.ReleaseTemporaryRT(pingRT);
                 m_renderBlurredNormals.ReleaseTemporaryRT(pongRT);
 

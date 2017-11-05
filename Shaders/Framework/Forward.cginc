@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @file Forward.cginc
 /// @brief Forward passes uber-header.
@@ -32,6 +36,11 @@
 #else
     #define A_FACING_SIGN_PARAM ,half facingSign : VFACE
     #define A_FACING_SIGN facingSign
+#endif
+
+// Shadows.
+#if defined(SHADOWS_SCREEN) && !defined(UNITY_NO_SCREENSPACE_SHADOWS)
+    #define A_SCREENSPACE_SHADOWS_ON
 #endif
 
 // Lightmaps.
@@ -96,7 +105,7 @@
     #define A_FOG_TEXCOORD_ON
 #endif
 
-#if !defined(A_TRANSFER_INSTANCE_ID_ON) && !defined(A_SURFACE_SHADER_OFF) && defined(A_WORLD_TO_OBJECT_ON) && defined(A_INSTANCING_PASS)
+#if !defined(A_TRANSFER_INSTANCE_ID_ON) && defined(A_WORLD_TO_OBJECT_ON) && defined(A_INSTANCING_PASS)
     #define A_TRANSFER_INSTANCE_ID_ON
 #endif
 
@@ -117,43 +126,45 @@
         float4 texcoords : TEXCOORD##A;
 #endif
 
-// Pos, Vertex Color, Position, View Depth, Fog, and Screen UV.
-#if defined(A_SURFACE_SHADER_OFF)
+// Vertex Color, Position, View Depth, Fog, and Screen UV.
+#if defined(A_POSITION_TEXCOORD_ON) && defined(A_FOG_TEXCOORD_ON)
     #define A_INNER_VERTEX_DATA1(A, B, C, D, E, F, G) \
-        UNITY_POSITION(pos);
-#elif defined(A_POSITION_TEXCOORD_ON) && defined(A_FOG_TEXCOORD_ON)
-    #define A_INNER_VERTEX_DATA1(A, B, C, D, E, F, G) \
-        UNITY_POSITION(pos); \
         half4 color : TEXCOORD##A; \
         float4 positionWorldAndViewDepth : TEXCOORD##B; \
         UNITY_FOG_COORDS_PACKED(C, half4) \
         A_INNER_VERTEX_DATA2(D, E, F, G)
 #elif defined(A_POSITION_TEXCOORD_ON)
     #define A_INNER_VERTEX_DATA1(A, B, C, D, E, F, G) \
-        UNITY_POSITION(pos); \
         half4 color : TEXCOORD##A; \
         float4 positionWorldAndViewDepth : TEXCOORD##B; \
         A_INNER_VERTEX_DATA2(C, D, E, F)
 #elif defined(A_FOG_TEXCOORD_ON)
     #define A_INNER_VERTEX_DATA1(A, B, C, D, E, F, G) \
-        UNITY_POSITION(pos); \
         half4 color : TEXCOORD##A; \
         UNITY_FOG_COORDS_PACKED(C, half4) \
         A_INNER_VERTEX_DATA2(D, E, F, G)
 #else
     #define A_INNER_VERTEX_DATA1(A, B, C, D, E, F, G) \
-        UNITY_POSITION(pos); \
         half4 color : TEXCOORD##A; \
         A_INNER_VERTEX_DATA2(B, C, D, E)
 #endif
 
 // Instancing.
-#if defined(A_INSTANCING_PASS) && defined(A_TRANSFER_INSTANCE_ID_ON)
-    #define A_VERTEX_DATA(A, B, C, D, E, F, G) A_INNER_VERTEX_DATA1(A, B, C, D, E, F, G) UNITY_VERTEX_OUTPUT_STEREO UNITY_VERTEX_INPUT_INSTANCE_ID
-#elif defined(A_INSTANCING_PASS)
-    #define A_VERTEX_DATA(A, B, C, D, E, F, G) A_INNER_VERTEX_DATA1(A, B, C, D, E, F, G) UNITY_VERTEX_OUTPUT_STEREO
+#if defined(A_TRANSFER_INSTANCE_ID_ON) && defined(A_STEREO_INSTANCING_PASS)
+    #define A_INSTANCING_VERTEX_DATA(A, B, C, D, E, F, G) A_INNER_VERTEX_DATA1(A, B, C, D, E, F, G) UNITY_VERTEX_INPUT_INSTANCE_ID UNITY_VERTEX_OUTPUT_STEREO
+#elif defined(A_TRANSFER_INSTANCE_ID_ON)
+    #define A_INSTANCING_VERTEX_DATA(A, B, C, D, E, F, G) A_INNER_VERTEX_DATA1(A, B, C, D, E, F, G) UNITY_VERTEX_INPUT_INSTANCE_ID
+#elif defined(A_STEREO_INSTANCING_PASS)
+    #define A_INSTANCING_VERTEX_DATA(A, B, C, D, E, F, G) A_INNER_VERTEX_DATA1(A, B, C, D, E, F, G) UNITY_VERTEX_OUTPUT_STEREO
 #else
-    #define A_VERTEX_DATA(A, B, C, D, E, F, G) A_INNER_VERTEX_DATA1(A, B, C, D, E, F, G)
+    #define A_INSTANCING_VERTEX_DATA(A, B, C, D, E, F, G) A_INNER_VERTEX_DATA1(A, B, C, D, E, F, G)
+#endif
+
+// Surface shader off.
+#if defined(A_SURFACE_SHADER_OFF)
+    #define A_VERTEX_DATA(A, B, C, D, E, F, G) 
+#else
+    #define A_VERTEX_DATA(A, B, C, D, E, F, G) A_INSTANCING_VERTEX_DATA(A, B, C, D, E, F, G)
 #endif
 
 /// Configurable vertex input data from the application.
@@ -293,20 +304,28 @@ UnityGI aFragmentGi(
 /// Transforms the vertex data before transferring it to the pixel shader.
 /// @param[in,out]  v       Vertex input data.
 /// @param[out]     o       Vertex to fragment transfer data.
+/// @param[out]     opos    Clip space position.
 void aForwardVertexShader(
     inout AVertexInput v,
-    out AFragmentInput o)
+    out AFragmentInput o, 
+    out float4 opos)
 {
+#ifdef A_SURFACE_SHADER_OFF
+    opos = 0.0h;
+#else
     UNITY_INITIALIZE_OUTPUT(AFragmentInput, o);
 
-#ifdef A_INSTANCING_PASS
-    UNITY_SETUP_INSTANCE_ID(v);
-    UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+    #ifdef A_INSTANCING_PASS
+        UNITY_SETUP_INSTANCE_ID(v);
 
-    #ifdef A_TRANSFER_INSTANCE_ID_ON
-        UNITY_TRANSFER_INSTANCE_ID(v, o);
+        #ifdef A_TRANSFER_INSTANCE_ID_ON
+            UNITY_TRANSFER_INSTANCE_ID(v, o);
+        #endif
+
+        #ifdef A_STEREO_INSTANCING_PASS
+            UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+        #endif
     #endif
-#endif
 
     // Copy vertex data, and let shader type modify it.
     AVertex vs = aNewVertex();
@@ -316,15 +335,15 @@ void aForwardVertexShader(
     vs.uv1 = v.uv1;
     vs.normalObject = v.normal;
 
-#ifdef A_UV2_ON
-    vs.uv2 = v.uv2;
-#endif
-#ifdef A_UV3_ON
-    vs.uv3 = v.uv3;
-#endif
-#ifdef A_TANGENT_ON
-    vs.tangentObject = v.tangent;
-#endif
+    #ifdef A_UV2_ON
+        vs.uv2 = v.uv2;
+    #endif
+    #ifdef A_UV3_ON
+        vs.uv3 = v.uv3;
+    #endif
+    #ifdef A_TANGENT_ON
+        vs.tangentObject = v.tangent;
+    #endif
 
     vs.color = v.color;
 
@@ -336,25 +355,24 @@ void aForwardVertexShader(
     v.uv1 = vs.uv1;
     v.normal = vs.normalObject;
 
-#ifdef A_UV2_ON
-    v.uv2 = vs.uv2;
-#endif
-#ifdef A_UV3_ON
-    v.uv3 = vs.uv3;
-#endif
-#ifdef A_TANGENT_ON
-    v.tangent = vs.tangentObject;
-#endif
+    #ifdef A_UV2_ON
+        v.uv2 = vs.uv2;
+    #endif
+    #ifdef A_UV3_ON
+        v.uv3 = vs.uv3;
+    #endif
+    #ifdef A_TANGENT_ON
+        v.tangent = vs.tangentObject;
+    #endif
 
     v.color = vs.color;
-    o.pos = UnityObjectToClipPos(v.vertex.xyz);
 
-#ifndef A_SURFACE_SHADER_OFF
     // Fill V2F.
     o.color = v.color; // Gamma-space vertex color, unless modified.
     o.texcoords.xy = v.uv0.xy;
     o.texcoords.zw = v.uv1.xy;
-
+    opos = UnityObjectToClipPos(v.vertex.xyz);
+    
     #ifdef A_POSITION_TEXCOORD_ON
         #ifdef A_POSITION_WORLD_ON
             o.positionWorldAndViewDepth.xyz = mul(unity_ObjectToWorld, v.vertex).xyz;
@@ -382,11 +400,33 @@ void aForwardVertexShader(
         o.normalWorld = tangentToWorld[2];
     #endif
 
+    #if defined(A_SCREEN_UV_ON) || (defined(A_DIRECT_ON) && defined(A_SCREENSPACE_SHADOWS_ON))
+        float4 screenPos = ComputeScreenPos(opos);
+    #endif
+
+    // Fog and Screen UV.
+    #ifdef A_FOG_TEXCOORD_ON
+        #ifdef A_SCREEN_UV_ON
+            o.fogCoord.yzw = screenPos.xyw;
+        #else
+            o.fogCoord.yzw = A_AXIS_Z;
+        #endif
+
+        #ifdef A_FOG_ON
+            UNITY_TRANSFER_FOG(o, opos);
+        #endif
+    #endif
+
     // Lighting data.
     aVertexGi(o, v);
 
     #ifdef A_DIRECT_ON
-        UNITY_TRANSFER_SHADOW(o, v.uv1); // Implicitly expects 'o.pos' parameter.
+        // NOTE: Custom macro to skip calculations and remove dependency on o.pos!
+        #ifdef A_SCREENSPACE_SHADOWS_ON
+            o._ShadowCoord = screenPos;
+        #else
+            UNITY_TRANSFER_SHADOW(o, v.uv1);
+        #endif
 
         #if !defined(DIRECTIONAL) && !defined(A_LIGHTMAP_SHADOW_MIXING_ON)
             o.lightCoord = mul(unity_WorldToLight, unityShadowCoord4(o.positionWorldAndViewDepth.xyz, 1.0f));
@@ -395,21 +435,6 @@ void aForwardVertexShader(
                 o.lightVectorRange = UnityWorldSpaceLightDir(o.positionWorldAndViewDepth.xyz).xyzz;
                 aLightRange(o.lightVectorRange, o.lightCoord);
             #endif
-        #endif
-    #endif
-
-    // Fog and Screen UV.
-    #ifdef A_FOG_TEXCOORD_ON
-        #ifdef A_FOG_ON
-            UNITY_TRANSFER_FOG(o, o.pos);
-        #endif
-
-        #if !defined(A_SCREEN_UV_ON)
-            o.fogCoord.yzw = A_AXIS_Z;
-        #elif defined(A_DIRECT_ON) && defined(SHADOWS_SCREEN) && !defined(UNITY_NO_SCREENSPACE_SHADOWS)
-            o.fogCoord.yzw = o._ShadowCoord.xyw; // Reuse from screen shadows.
-        #else
-            o.fogCoord.yzw = ComputeScreenPos(o.pos).xyw;
         #endif
     #endif
 #endif
@@ -424,10 +449,6 @@ ASurface aForwardSurface(
     half facingSign)
 {
     ASurface s = aNewSurface();
-
-#if defined(A_CROSSFADE_PASS) && defined(LOD_FADE_CROSSFADE)
-    UnityApplyDitherCrossFade(i.pos.xy);
-#endif
 
 #ifndef A_SURFACE_SHADER_OFF
     #ifdef A_TRANSFER_INSTANCE_ID_ON
@@ -497,6 +518,13 @@ ASurface aForwardSurface(
             s.screenPosition.xyw = i.fogCoord.yzw;
             s.screenPosition.z = 0.0h;
             s.screenUv.xy = s.screenPosition.xy / s.screenPosition.w;
+
+            #ifdef LOD_FADE_CROSSFADE
+                half2 projUV = s.screenUv.xy * _ScreenParams.xy * 0.25h;
+
+                projUV.y = frac(projUV.y) * 0.0625h /* 1/16 */ + unity_LODFade.y; // quantized lod fade by 16 levels
+                clip(tex2D(_DitherMaskLOD2D, projUV).a - 0.5f);
+            #endif
         #endif
     #endif
 

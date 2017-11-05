@@ -1,4 +1,8 @@
-﻿Shader "Alloy/Nature/SpeedTree Billboard" {
+﻿// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
+Shader "Alloy/Nature/SpeedTree Billboard" {
 Properties {
     // Global Settings
     [LM_TransparencyCutOff] 

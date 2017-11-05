@@ -1,8 +1,12 @@
-﻿using UnityEngine;
+﻿// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
+using UnityEngine;
 
 public static class AlloyUtils {
     public const string Name = "Alloy";
-    public const string Version = "4.1.0";
+    public const string Version = "3.6.4";
     public const float SectionColorMax = 20.0f;
 
     public const string Path = Name + "/";

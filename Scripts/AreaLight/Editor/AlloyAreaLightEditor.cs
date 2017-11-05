@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
+using UnityEngine;
 using UnityEditor;
 
 [CustomEditor(typeof(AlloyAreaLight))]

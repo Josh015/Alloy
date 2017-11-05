@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 Shader "Hidden/Alloy/Legacy/Nature/Terrain/nSplat TriPlanar AddPass" {
 Properties {
     // Distant Terrain

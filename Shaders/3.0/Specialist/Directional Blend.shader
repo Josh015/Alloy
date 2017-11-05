@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 Shader "Alloy/Directional Blend" {
 Properties {
     // Global Settings
@@ -150,8 +154,8 @@ Properties {
 
     // Directional Blend
     _DirectionalBlendProperties ("'Directional Blend' {Section:{Color:14}}", Float) = 0
-    [Toggle(_DIRECTIONALBLENDMODE_OBJECT)]
-    _DirectionalBlendMode ("'Mode' {Dropdown:{World:{}, Object:{}}}", Float) = 0
+    [Toggle(_DIRECTIONALBLENDMODE_WORLD)]
+    _DirectionalBlendMode ("'Mode' {Dropdown:{Object:{}, World:{}}}", Float) = 1
     _DirectionalBlendDirection ("'Direction' {Vector:Euler}", Vector) = (0,1,0,0)
     _DirectionalBlendDirectionEulerUI ("'Rotation' {Vector:3}", Vector) = (0,0,0,0)
     _OrientedScale ("'Weight' {Min:0, Max:1}", Float) = 1.0
@@ -226,11 +230,11 @@ SubShader {
         #pragma shader_feature _DISSOLVE_ON
         #pragma shader_feature _WETNESS_ON
         #pragma shader_feature _WETMASKSOURCE_VERTEXCOLORALPHA
-        #pragma shader_feature _DIRECTIONALBLENDMODE_OBJECT
+        #pragma shader_feature _DIRECTIONALBLENDMODE_WORLD
         #pragma shader_feature _ _SPECULARHIGHLIGHTS_OFF
         #pragma shader_feature _ _GLOSSYREFLECTIONS_OFF
         
-        //#pragma multi_compile __ LOD_FADE_CROSSFADE
+        //#pragma multi_compile __ LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
         #pragma multi_compile_fwdbase
         #pragma multi_compile_fog
         #pragma multi_compile_instancing
@@ -271,10 +275,10 @@ SubShader {
         #pragma shader_feature _DISSOLVE_ON
         #pragma shader_feature _WETNESS_ON
         #pragma shader_feature _WETMASKSOURCE_VERTEXCOLORALPHA
-        #pragma shader_feature _DIRECTIONALBLENDMODE_OBJECT
+        #pragma shader_feature _DIRECTIONALBLENDMODE_WORLD
         #pragma shader_feature _ _SPECULARHIGHLIGHTS_OFF
         
-        //#pragma multi_compile __ LOD_FADE_CROSSFADE
+        //#pragma multi_compile __ LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
         #pragma multi_compile_fwdadd_fullshadows
         #pragma multi_compile_fog
         //#pragma multi_compile __ VTRANSPARENCY_ON
@@ -339,10 +343,10 @@ SubShader {
         #pragma shader_feature _DISSOLVE_ON
         #pragma shader_feature _WETNESS_ON
         #pragma shader_feature _WETMASKSOURCE_VERTEXCOLORALPHA
-        #pragma shader_feature _DIRECTIONALBLENDMODE_OBJECT
+        #pragma shader_feature _DIRECTIONALBLENDMODE_WORLD
         #pragma shader_feature _ _GLOSSYREFLECTIONS_OFF
         
-        //#pragma multi_compile __ LOD_FADE_CROSSFADE
+        //#pragma multi_compile __ LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
         #pragma multi_compile_prepassfinal
         #pragma skip_variants FOG_LINEAR FOG_EXP FOG_EXP2
         #pragma multi_compile_instancing
@@ -374,7 +378,7 @@ SubShader {
         #pragma shader_feature _TEAMCOLOR_ON
         #pragma shader_feature _DECAL_ON
         #pragma shader_feature _EMISSION
-        #pragma shader_feature _DIRECTIONALBLENDMODE_OBJECT
+        #pragma shader_feature _DIRECTIONALBLENDMODE_WORLD
         
         #pragma vertex aMainVertexShader
         #pragma fragment aMainFragmentShader

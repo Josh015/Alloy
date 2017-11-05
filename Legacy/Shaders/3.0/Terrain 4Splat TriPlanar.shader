@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 Shader "Alloy/Legacy/Nature/Terrain/4Splat TriPlanar" {
 Properties {
     // Splat 0 Properties

@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 /////////////////////////////////////////////////////////////////////////////////
 /// @file Lighting.cginc
 /// @brief Lighting uber-header.
@@ -7,7 +11,6 @@
 #define ALLOY_SHADERS_FRAMEWORK_LIGHTING_CGINC
 
 // Headers both for this file, and for all Definition and Feature modules.
-#include "Assets/Alloy/Shaders/Config.cginc"
 #include "Assets/Alloy/Shaders/Framework/Utility.cginc"
 
 #include "UnityLightingCommon.cginc"

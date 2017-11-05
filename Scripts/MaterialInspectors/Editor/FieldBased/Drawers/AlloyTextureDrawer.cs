@@ -1,4 +1,8 @@
-﻿using Alloy;
+﻿// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
+using Alloy;
 using UnityEditor;
 using UnityEditor.AnimatedValues;
 using UnityEngine;
@@ -18,16 +22,18 @@ public class AlloyTextureFieldDrawer : AlloyFieldDrawer {
 		get { return m_parentTexture; }
 		set {
 			m_parentTexture = value;
+			m_hasParentTexture = !string.IsNullOrEmpty(value);
 		}
 	}
-	bool HasParentTexture { get { return !string.IsNullOrEmpty(m_parentTexture); } }
-	string m_parentTexture;
-
 
 	public TextureVisualizeMode[] DisplayModes;
 	public bool Controls = true;
 
 	protected int TexInst;
+
+	string m_parentTexture = string.Empty;
+	bool m_hasParentTexture;
+
 	protected AlloyTabGroup TabGroup;
 
 	AnimBool m_tabOpen = new AnimBool(false);
@@ -50,12 +56,14 @@ public class AlloyTextureFieldDrawer : AlloyFieldDrawer {
 		}
 	}
 
+	protected virtual string TextureProp { get { return "m_Texture"; } }
+
 	TextureVisualizeMode Mode {
 		get { return m_vizIndex == 0 ? TextureVisualizeMode.None : DisplayModes[m_vizIndex - 1]; }
 	}
 
 	protected string SaveName { get { return Property.name + TexInst; } }
-	bool IsOpen { get { return TabGroup.IsOpen(SaveName); } }
+	protected bool IsOpen { get { return TabGroup.IsOpen(SaveName); } }
 
 	//Passed in by the base editor
 	public AlloyTextureFieldDrawer(AlloyInspectorBase editor, MaterialProperty property)
@@ -75,10 +83,12 @@ public class AlloyTextureFieldDrawer : AlloyFieldDrawer {
 		return Mode == TextureVisualizeMode.None ? "Visualize" : Mode.ToString();
 	}
 
-	void TextureField(float size, MaterialProperty prop) {
+	void TextureField(float size, MaterialProperty prop, AlloyFieldDrawerArgs args) {
 		var rawRef = prop.textureValue;
 
-		if (rawRef == null && !prop.hasMixedValue && (!IsOpen || HasParentTexture)) {
+		if (rawRef == null
+		    && !prop.hasMixedValue
+		    && (!IsOpen || m_hasParentTexture)) {
 
 			s_texLayout[0] = GUILayout.Width(100.0f);
 			s_texLayout[1] = GUILayout.Height(16.0f);
@@ -164,8 +174,14 @@ public class AlloyTextureFieldDrawer : AlloyFieldDrawer {
 		}
 	}
 
-	public override void OnSceneGUI(AlloyFieldBasedEditor editor, Material[] materials) {
-		if (materials.Length > 1 || Mode == TextureVisualizeMode.None || Selection.activeGameObject == null || Selection.objects.Length != 1) {
+	public override void OnSceneGUI(Material[] materials) {
+		if (materials.Length > 1) {
+			return;
+		}
+
+		var material = materials[0];
+
+		if (Mode == TextureVisualizeMode.None || Selection.activeGameObject == null || Selection.objects.Length != 1) {
 			if (m_oldSelect != null) {
 				EditorUtility.SetSelectedRenderState(m_oldSelect, EditorSelectedRenderState.Highlight);
 			}
@@ -174,13 +190,15 @@ public class AlloyTextureFieldDrawer : AlloyFieldDrawer {
 		}
 
 		var curTex = Property.textureValue;
-		var propForUv = HasParentTexture ? editor.GetMaterialProperty(ParentTexture) : Property;
 
-		Vector4 scaleAndOffset = propForUv.textureScaleAndOffset;
-		var uvName = propForUv.name + "UV";
+		if (Mode == TextureVisualizeMode.None) {
+			return;
+		}
 
-		float uvMode = 0.0f;
-		var material = materials[0];
+		var trans = Property.textureScaleAndOffset;
+
+		var uvMode = 0.0f;
+		var uvName = !m_hasParentTexture ? Property.name + "UV" : m_parentTexture + "UV";
 
 		if (material.HasProperty(uvName)) {
 			uvMode = material.GetFloat(uvName);
@@ -188,7 +206,7 @@ public class AlloyTextureFieldDrawer : AlloyFieldDrawer {
 
 		VisualizeMaterial.SetTexture("_MainTex", curTex);
 		VisualizeMaterial.SetFloat("_Mode", (int) Mode);
-		VisualizeMaterial.SetVector("_Trans", scaleAndOffset);
+		VisualizeMaterial.SetVector("_Trans", trans);
 		VisualizeMaterial.SetFloat("_UV", uvMode);
 
 		var target = Selection.activeGameObject.GetComponent<Renderer>();
@@ -246,8 +264,7 @@ public class AlloyTextureFieldDrawer : AlloyFieldDrawer {
 
 		bool drewOpen = false;
 
-		if (ParentTexture != null || !Controls) {
-			// Allows child to access parent scale-offset for visualize.
+		if (m_hasParentTexture || !Controls) {
 			GUILayout.Label(DisplayName);
 		}
 		else {
@@ -283,20 +300,20 @@ public class AlloyTextureFieldDrawer : AlloyFieldDrawer {
 		EditorGUILayout.EndFadeGroup();
 
 		if (curTex != null
-		    && (ParentTexture != null || Controls)
+		    && (!m_hasParentTexture || Controls)
 		    && !Property.hasMixedValue) {
 			DrawVisualizeButton();
 		}
 
 		if (drewOpen) {
 			EditorGUILayout.EndVertical();
-			TextureField(Mathf.Lerp(74.0f, 100.0f, m_tabOpen.faded), Property);
+			TextureField(Mathf.Lerp(74.0f, 100.0f, m_tabOpen.faded), Property, args);
 		}
 		else {
 			GUILayout.EndVertical();
 
 			GUILayout.FlexibleSpace();
-			TextureField(74.0f, Property);
+			TextureField(74.0f, Property, args);
 		}
 
 		EditorGUIUtility.labelWidth = oldWidth;
@@ -315,13 +332,14 @@ public class AlloyTextureFieldDrawer : AlloyFieldDrawer {
 	protected void DrawTextureControls(AlloyFieldDrawerArgs args) {
 
 		string velName = Property.name + "Velocity";
-		var scrollProp = args.Editor.GetMaterialProperty(velName);
+		var scrollProp = args.GetMaterialProperty(velName);
 
 		string spinName = Property.name + "Spin";
-		var spinProp = args.Editor.GetMaterialProperty(spinName);
+		var spinProp = args.GetMaterialProperty(spinName);
 
 		string uvName = Property.name + "UV";
-		var uvProp = args.Editor.GetMaterialProperty(uvName);
+		var uvProp = args.GetMaterialProperty(uvName);
+
 
 		BeginMaterialProperty(Property);
 		var trans = Property.textureScaleAndOffset;
@@ -333,6 +351,7 @@ public class AlloyTextureFieldDrawer : AlloyFieldDrawer {
 		trans.y = tileVal.y;
 		trans.z = offsetVal.x;
 		trans.w = offsetVal.y;
+
 
 		if (scrollProp != null) {
 			BeginMaterialProperty(scrollProp);

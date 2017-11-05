@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 Shader "Alloy/Tessellation/Unlit" {
 Properties {
     // Global Settings
@@ -156,7 +160,7 @@ SubShader {
         #pragma shader_feature _RIM_ON
         #pragma shader_feature _DISSOLVE_ON
         
-        //#pragma multi_compile __ LOD_FADE_CROSSFADE
+        //#pragma multi_compile __ LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
         #pragma multi_compile_fog
         #pragma multi_compile_instancing
             
@@ -192,7 +196,7 @@ SubShader {
         #pragma shader_feature _RIM_ON
         #pragma shader_feature _DISSOLVE_ON
         
-        //#pragma multi_compile __ LOD_FADE_CROSSFADE
+        //#pragma multi_compile __ LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
         #pragma multi_compile ___ UNITY_HDR_ON
         #pragma multi_compile_instancing
         

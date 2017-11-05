@@ -1,4 +1,8 @@
-﻿Shader "Hidden/Alloy Visualize" {
+﻿// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
+Shader "Hidden/Alloy Visualize" {
 Properties {
     _MainTex ("Base (RGB)", 2D) = "white" {}
     _Mode("Mode", Float) = 0

@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
+using System;
 using System.Linq;
 using UnityEditor;
 
@@ -12,15 +16,19 @@ public class AlloyTextureParser : AlloyFieldParser
             var argToken = token.ArgumentToken;
 
             switch (argName) {
-                case "Visualize": 
-                    var container = argToken as AlloyCollectionToken;
-                    if (container != null) {
-                        ret.DisplayModes = container.SubTokens.Select(t => (AlloyTextureFieldDrawer.TextureVisualizeMode)Enum.Parse(typeof(AlloyTextureFieldDrawer.TextureVisualizeMode), t.Token)).ToArray();
+                case "Visualize": {
+                        var container = argToken as AlloyCollectionToken;
+                        if (container != null) {
+                            ret.DisplayModes = container.SubTokens.Select(t => (AlloyTextureFieldDrawer.TextureVisualizeMode)Enum.Parse(typeof(AlloyTextureFieldDrawer.TextureVisualizeMode), t.Token)).ToArray();
+                        }
                     }
+
                     break;
 
-                case "Parent": 
-                    ret.ParentTexture = argToken.Token;
+                case "Parent": {
+                        ret.ParentTexture = argToken.Token;
+                    }
+
                     break;
 
                 case "Controls":

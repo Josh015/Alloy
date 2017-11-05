@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @file Details1.cginc
 /// @brief Unity Details1 shader type callbacks.
@@ -12,6 +16,10 @@
 
 #ifndef A_TEX_SCROLL_OFF
     #define A_TEX_SCROLL_OFF
+#endif
+
+#ifndef A_OPACITY_MASK_ON
+    #define A_OPACITY_MASK_ON
 #endif
 
 #include "Assets/Alloy/Shaders/Framework/Type.cginc"

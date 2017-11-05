@@ -1,27 +1,24 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 Shader "Alloy/Tessellation/Human/Eye" {
 Properties {    
-    // Global Settings
-    [Toggle(_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A)]
-    _MainRoughnessSource ("'Roughness Source' {Dropdown:{PackedMapAlpha:{}, Property:{_SpecTex}}}", Float) = 1
-
     // Eye Textures
     _EyeballTextures ("'Eye Textures' {Section:{Color:0}}", Float) = 0
     [LM_Albedo] [LM_Transparency] 
     _Color ("'Tint' {}", Color) = (1,1,1,1)	
     [LM_MasterTilingOffset] [LM_Albedo] 
     _MainTex ("'Base Color(RGB) Iris(A)' {Visualize:{RGB, A}}", 2D) = "white" {}
-    [LM_Metallic]
-    _SpecTex ("'Metal(R) AO(G) Spec(B) Rough(A)' {Visualize:{R, G, B, A}, Parent:_MainTex}", 2D) = "white" {}
+    _ParallaxMap ("'Heightmap(G)' {Visualize:{RGB}, Parent:_MainTex}", 2D) = "black" {}
     [LM_NormalMap]
     _BumpMap ("'Normals' {Visualize:{NRM}, Parent:_MainTex}", 2D) = "bump" {}
-    _ParallaxMap ("'Heightmap(G)' {Visualize:{RGB}, Parent:_MainTex}", 2D) = "black" {}
     _BaseColorVertexTint ("'Vertex Color Tint' {Min:0, Max:1}", Float) = 0
     
     // Cornea Properties 
     _CorneaProperties ("'Cornea' {Section:{Color:1}}", Float) = 0
     _CorneaColor ("'Tint' {}", Color) = (0.5,0.5,0.5,0)
     _CorneaNormalMap ("'Normals' {Visualize:{NRM}, Parent:_MainTex}", 2D) = "bump" {}
-    _CorneaMetallic ("'Metallic' {Min:0, Max:1}", Float) = 0
     _CorneaSpecularity ("'Specularity' {Min:0, Max:1}", Float) = 0.36
     _CorneaRoughness ("'Roughness' {Min:0, Max:1}", Float) = 0.1
     _CorneaNormalMapScale ("'Normal Strength' {}", Float) = 1
@@ -38,7 +35,6 @@ Properties {
     // Sclera Properties 
     _ScleraProperties ("'Sclera' {Section:{Color:3}}", Float) = 0
     _ScleraColor ("'Tint' {}", Color) = (1,1,1)
-    _ScleraMetallic ("'Metallic' {Min:0, Max:1}", Float) = 0
     _ScleraSpecularity ("'Specularity' {Min:0, Max:1}", Float) = 0.36
     _ScleraRoughness ("'Roughness' {Min:0, Max:1}", Float) = 0.1
     _ScleraNormalMapScale ("'Normal Strength' {}", Float) = 1
@@ -143,8 +139,7 @@ SubShader {
         CGPROGRAM
         //#pragma target 4.6
         #pragma exclude_renderers gles
-
-        #pragma shader_feature _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+        
         #pragma shader_feature _TESSELLATIONMODE_DISPLACEMENT _TESSELLATIONMODE_PHONG
         #pragma shader_feature _DETAIL_MULX2
         #pragma shader_feature _DECAL_ON
@@ -154,7 +149,7 @@ SubShader {
         #pragma shader_feature _ _SPECULARHIGHLIGHTS_OFF
         #pragma shader_feature _ _GLOSSYREFLECTIONS_OFF
         
-        //#pragma multi_compile __ LOD_FADE_CROSSFADE
+        //#pragma multi_compile __ LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
         #pragma multi_compile_fwdbase
         #pragma multi_compile_fog
         #pragma multi_compile_instancing
@@ -183,15 +178,14 @@ SubShader {
         CGPROGRAM
         //#pragma target 4.6
         #pragma exclude_renderers gles
-
-        #pragma shader_feature _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+        
         #pragma shader_feature _TESSELLATIONMODE_DISPLACEMENT _TESSELLATIONMODE_PHONG
         #pragma shader_feature _DETAIL_MULX2
         #pragma shader_feature _DECAL_ON
         #pragma shader_feature _DISSOLVE_ON
         #pragma shader_feature _ _SPECULARHIGHLIGHTS_OFF
         
-        //#pragma multi_compile __ LOD_FADE_CROSSFADE
+        //#pragma multi_compile __ LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
         #pragma multi_compile_fwdadd_fullshadows
         #pragma multi_compile_fog
         //#pragma multi_compile __ VTRANSPARENCY_ON
@@ -216,8 +210,7 @@ SubShader {
         CGPROGRAM
         //#pragma target 4.6
         #pragma exclude_renderers gles
-
-        #pragma shader_feature _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+        
         #pragma shader_feature _TESSELLATIONMODE_DISPLACEMENT _TESSELLATIONMODE_PHONG
         #pragma shader_feature _DISSOLVE_ON
         
@@ -244,8 +237,7 @@ SubShader {
         CGPROGRAM
         //#pragma target 4.6
         #pragma exclude_renderers gles
-
-        #pragma shader_feature _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+        
         #pragma shader_feature _TESSELLATIONMODE_DISPLACEMENT _TESSELLATIONMODE_PHONG
         #pragma shader_feature _DETAIL_MULX2
         #pragma shader_feature _DECAL_ON
@@ -254,7 +246,7 @@ SubShader {
         #pragma shader_feature _DISSOLVE_ON
         #pragma shader_feature _ _GLOSSYREFLECTIONS_OFF
         
-        //#pragma multi_compile __ LOD_FADE_CROSSFADE
+        //#pragma multi_compile __ LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
         #pragma multi_compile_prepassfinal
         #pragma skip_variants FOG_LINEAR FOG_EXP FOG_EXP2
         #pragma multi_compile_instancing
@@ -281,8 +273,7 @@ SubShader {
         CGPROGRAM
         //#pragma target 4.6
         #pragma exclude_renderers nomrt gles
-
-        #pragma shader_feature _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+        
         #pragma shader_feature _DECAL_ON
         #pragma shader_feature _EMISSION
         

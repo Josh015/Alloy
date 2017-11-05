@@ -1,4 +1,8 @@
-﻿using Alloy;
+﻿// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
+using Alloy;
 using UnityEditor;
 using UnityEditor.AnimatedValues;
 using UnityEngine;
@@ -114,7 +118,7 @@ public class AlloyVectorDrawer : AlloyFieldDrawer {
 				break;
 
 			case VectorMode.Euler:
-				var value = args.Editor.GetMaterialProperty(Property.name + "EulerUI").vectorValue;
+				var value = args.GetMaterialProperty(Property.name + "EulerUI").vectorValue;
 				//var value = (Vector4)args.Editor.GetProperty(MaterialProperty.PropType.Vector, Property.name + "EulerUI").colorValue;
 				newVal = Quaternion.Euler(value) * Vector3.up;
 				GUI.changed = true;

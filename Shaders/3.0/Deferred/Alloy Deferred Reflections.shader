@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 Shader "Hidden/Alloy/Deferred Reflections" {
 Properties {
     _SrcBlend ("", Float) = 1

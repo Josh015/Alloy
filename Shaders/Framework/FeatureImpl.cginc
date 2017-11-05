@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 /////////////////////////////////////////////////////////////////////////////////
 /// @file Feature.cginc
 /// @brief Feature method implementations to allow disabling of features.
@@ -15,7 +19,7 @@
 #endif
 
 #ifdef A_TRIPLANAR_MAPPING_ON
-    #ifdef _TRIPLANARMODE_OBJECT
+    #ifndef _TRIPLANARMODE_WORLD
         #define A_WORLD_TO_OBJECT_ON
     #endif   
 
@@ -79,7 +83,7 @@ ASplatContext aNewSplatContext(
 #ifdef A_TRIPLANAR_MAPPING_ON
     // Triplanar mapping
     // cf http://www.gamedev.net/blog/979/entry-2250761-triplanar-texturing-and-normal-mapping/
-    #ifndef _TRIPLANARMODE_OBJECT
+    #ifdef _TRIPLANARMODE_WORLD
         half3 geoNormal = s.vertexNormalWorld;
         sc.position = s.positionWorld;
     #else
@@ -129,7 +133,7 @@ void aApplySplat(
 #ifndef A_TRIPLANAR_MAPPING_ON
     s.normalTangent = A_NT(s, normalize(normal));
 #else
-    #ifndef _TRIPLANARMODE_OBJECT
+    #ifdef _TRIPLANARMODE_WORLD
         half3 normalWorld = normalize(normal);
     #else
         half3 normalWorld = UnityObjectToWorldNormal(normal);
@@ -164,7 +168,7 @@ void aBlendSplat(
 #ifndef A_TRIPLANAR_MAPPING_ON
     s.normalTangent = A_NT(s, normalize(lerp(s.normalTangent, normal, weight)));
 #else
-    #ifndef _TRIPLANARMODE_OBJECT
+    #ifdef _TRIPLANARMODE_WORLD
         half3 normalWorld = normalize(normal);
     #else
         half3 normalWorld = UnityObjectToWorldNormal(normal);

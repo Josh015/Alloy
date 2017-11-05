@@ -509,8 +509,7 @@ inline half3 DecodeLightmapRGBM (half4 data, half4 decodeInstructions)
 // Decodes doubleLDR encoded lightmaps.
 inline half3 DecodeLightmapDoubleLDR( fixed4 color )
 {
-    float multiplier = IsGammaSpace() ? 2.0f : GammaToLinearSpace(2.0f).x;
-    return multiplier * color.rgb;
+    return 2.0 * color.rgb;
 }
 
 inline half3 DecodeLightmap( fixed4 color, half4 decodeInstructions)
@@ -636,24 +635,12 @@ inline fixed3 UnpackNormalDXT5nm (fixed4 packednormal)
     return normal;
 }
 
-// Unpack normal as DXT5nm (1, y, 1, x) or BC5 (x, y, 0, 1)
-// Note neutral texture like "bump" is (0, 0, 1, 1) to work with both plain RGB normal and DXT5nm/BC5
-fixed3 UnpackNormalmapRGorAG(fixed4 packednormal)
-{
-    // This do the trick
-   packednormal.x *= packednormal.w;
-
-    fixed3 normal;
-    normal.xy = packednormal.xy * 2 - 1;
-    normal.z = sqrt(1 - saturate(dot(normal.xy, normal.xy)));
-    return normal;
-}
 inline fixed3 UnpackNormal(fixed4 packednormal)
 {
 #if defined(UNITY_NO_DXT5nm)
     return packednormal.xyz * 2 - 1;
 #else
-    return UnpackNormalmapRGorAG(packednormal);
+    return UnpackNormalDXT5nm(packednormal);
 #endif
 }
 
@@ -698,14 +685,9 @@ inline float4 UnityStereoTransformScreenSpaceTex(float4 uv)
 {
     return float4(UnityStereoTransformScreenSpaceTex(uv.xy), UnityStereoTransformScreenSpaceTex(uv.zw));
 }
-inline float2 UnityStereoClamp(float2 uv, float4 scaleAndOffset)
-{
-    return float2(clamp(uv.x, scaleAndOffset.z, scaleAndOffset.z + scaleAndOffset.x), uv.y);
-}
 #else
 #define TransformStereoScreenSpaceTex(uv, w) uv
 #define UnityStereoTransformScreenSpaceTex(uv) uv
-#define UnityStereoClamp(uv, scaleAndOffset) uv
 #endif
 
 // Depth render texture helpers
@@ -721,15 +703,12 @@ struct appdata_img
 {
     float4 vertex : POSITION;
     half2 texcoord : TEXCOORD0;
-    UNITY_VERTEX_INPUT_INSTANCE_ID
 };
 
 struct v2f_img
 {
     float4 pos : SV_POSITION;
     half2 uv : TEXCOORD0;
-    UNITY_VERTEX_INPUT_INSTANCE_ID
-    UNITY_VERTEX_OUTPUT_STEREO
 };
 
 float2 MultiplyUV (float4x4 mat, float2 inUV) {
@@ -741,9 +720,6 @@ float2 MultiplyUV (float4x4 mat, float2 inUV) {
 v2f_img vert_img( appdata_img v )
 {
     v2f_img o;
-    UNITY_SETUP_INSTANCE_ID(v);
-    UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-
     o.pos = UnityObjectToClipPos (v.vertex);
     o.uv = v.texcoord;
     return o;
@@ -891,7 +867,7 @@ float4 UnityApplyLinearShadowBias(float4 clipPos)
 
 // Declare all data needed for shadow caster pass output (any shadow directions/depths/distances as needed),
 // plus clip space position.
-#define V2F_SHADOW_CASTER V2F_SHADOW_CASTER_NOPOS UNITY_POSITION(pos)
+#define V2F_SHADOW_CASTER V2F_SHADOW_CASTER_NOPOS float4 pos : SV_POSITION
 
 // Vertex shader part, with support for normal offset shadows. Requires
 // position and normal to be present in the vertex input.
@@ -926,19 +902,14 @@ float4 UnityApplyLinearShadowBias(float4 clipPos)
 #endif
 
 #if defined(UNITY_REVERSED_Z)
-    #if UNITY_REVERSED_Z == 1
-        //D3d with reversed Z => z clip range is [near, 0] -> remapping to [0, far]
-        //max is required to protect ourselves from near plane not being correct/meaningfull in case of oblique matrices.
-        #define UNITY_Z_0_FAR_FROM_CLIPSPACE(coord) max(((1.0-(coord)/_ProjectionParams.y)*_ProjectionParams.z),0)
-    #else
-        //GL with reversed z => z clip range is [near, -far] -> should remap in theory but dont do it in practice to save some perf (range is close enough)
-        #define UNITY_Z_0_FAR_FROM_CLIPSPACE(coord) max(-(coord), 0)
-    #endif
+    //D3d with reversed Z => z clip range is [near, 0] -> remapping to [0, far]
+    //max is required to protect ourselves from near plane not being correct/meaningfull in case of oblique matrices.
+    #define UNITY_Z_0_FAR_FROM_CLIPSPACE(coord) max(((1.0-(coord)/_ProjectionParams.y)*_ProjectionParams.z),0)
 #elif UNITY_UV_STARTS_AT_TOP
     //D3d without reversed z => z clip range is [0, far] -> nothing to do
     #define UNITY_Z_0_FAR_FROM_CLIPSPACE(coord) (coord)
 #else
-    //Opengl => z clip range is [-near, far] -> should remap in theory but dont do it in practice to save some perf (range is close enough)
+    //Opengl => z clip range is [-near, far] -> should remap in theory but dont do it in practice to save some perf (range is close enought)
     #define UNITY_Z_0_FAR_FROM_CLIPSPACE(coord) (coord)
 #endif
 
@@ -998,23 +969,31 @@ float4 UnityApplyLinearShadowBias(float4 clipPos)
 
 // ------------------------------------------------------------------
 //  LOD cross fade helpers
-// keep all the old macros
-#define UNITY_DITHER_CROSSFADE_COORDS
-#define UNITY_DITHER_CROSSFADE_COORDS_IDX(idx)
-#define UNITY_TRANSFER_DITHER_CROSSFADE(o,v)
-#define UNITY_TRANSFER_DITHER_CROSSFADE_HPOS(o,hpos)
-
 #ifdef LOD_FADE_CROSSFADE
-    #define UNITY_APPLY_DITHER_CROSSFADE(vpos)  UnityApplyDitherCrossFade(vpos)
-    sampler2D _DitherMaskLOD2D;
-    void UnityApplyDitherCrossFade(float2 vpos)
+    #define UNITY_DITHER_CROSSFADE_COORDS                   half3 ditherScreenPos;
+    #define UNITY_DITHER_CROSSFADE_COORDS_IDX(idx)          half3 ditherScreenPos : TEXCOORD##idx;
+    #define UNITY_TRANSFER_DITHER_CROSSFADE(o,v)            o.ditherScreenPos = ComputeDitherScreenPos(UnityObjectToClipPos(v));
+    #define UNITY_TRANSFER_DITHER_CROSSFADE_HPOS(o,hpos)    o.ditherScreenPos = ComputeDitherScreenPos(hpos);
+    half3 ComputeDitherScreenPos(float4 hPos)
     {
-        vpos /= 4; // the dither mask texture is 4x4
-        vpos.y = frac(vpos.y) * 0.0625 /* 1/16 */ + unity_LODFade.y; // quantized lod fade by 16 levels
-        clip(tex2D(_DitherMaskLOD2D, vpos).a - 0.5);
+        half3 screenPos = ComputeScreenPos(hPos).xyw;
+        screenPos.xy *= _ScreenParams.xy * 0.25;
+        return screenPos;
+    }
+    #define UNITY_APPLY_DITHER_CROSSFADE(i)                 ApplyDitherCrossFade(i.ditherScreenPos);
+    sampler2D _DitherMaskLOD2D;
+    void ApplyDitherCrossFade(half3 ditherScreenPos)
+    {
+        half2 projUV = ditherScreenPos.xy / ditherScreenPos.z;
+        projUV.y = frac(projUV.y) * 0.0625 /* 1/16 */ + unity_LODFade.y; // quantized lod fade by 16 levels
+        clip(tex2D(_DitherMaskLOD2D, projUV).a - 0.5);
     }
 #else
-    #define UNITY_APPLY_DITHER_CROSSFADE(vpos)
+    #define UNITY_DITHER_CROSSFADE_COORDS
+    #define UNITY_DITHER_CROSSFADE_COORDS_IDX(idx)
+    #define UNITY_TRANSFER_DITHER_CROSSFADE(o,v)
+    #define UNITY_TRANSFER_DITHER_CROSSFADE_HPOS(o,hpos)
+    #define UNITY_APPLY_DITHER_CROSSFADE(i)
 #endif
 
 

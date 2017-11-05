@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @file SpeedTreeBillboard.cginc
 /// @brief SpeedTree Billboard shader type callbacks.
@@ -16,6 +20,10 @@
 
 #ifndef A_VERTEX_COLOR_IS_DATA
     #define A_VERTEX_COLOR_IS_DATA
+#endif
+
+#ifndef A_OPACITY_MASK_ON
+    #define A_OPACITY_MASK_ON
 #endif
 
 #define _ALPHATEST_ON

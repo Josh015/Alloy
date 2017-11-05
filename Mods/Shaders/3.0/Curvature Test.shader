@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 Shader "Alloy Mods/Curvature Test" {
 Properties {
     _CurvatureScale ("'Curvature Scale' {Min:0.001, Max:0.1}", Float) = 0.005
@@ -25,7 +29,7 @@ SubShader {
         #pragma target 3.0
         #pragma exclude_renderers gles
                 
-        //#pragma multi_compile __ LOD_FADE_CROSSFADE
+        //#pragma multi_compile __ LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
         #pragma multi_compile_fwdbase
         #pragma multi_compile_fog
         #pragma multi_compile_instancing

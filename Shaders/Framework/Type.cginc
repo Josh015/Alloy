@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @file Type.cginc
 /// @brief Shader type uber-header.
@@ -6,11 +10,14 @@
 #ifndef ALLOY_SHADERS_FRAMEWORK_TYPE_CGINC
 #define ALLOY_SHADERS_FRAMEWORK_TYPE_CGINC
 
+#define A_VOLUMETRIC_DATA ASurface
+
 // Headers both for this file, and for all Definition and Feature modules.
 #include "Assets/Alloy/Shaders/Config.cginc"
 #include "Assets/Alloy/Shaders/Framework/Feature.cginc"
 #include "Assets/Alloy/Shaders/Framework/Lighting.cginc"
 #include "Assets/Alloy/Shaders/Framework/Utility.cginc"
+#include "Assets/Alloy/Shaders/Framework/Volumetric.cginc"
 
 #include "UnityCG.cginc"
 #include "UnityInstancing.cginc"
@@ -136,14 +143,5 @@ void aStandardVertexShader(inout AVertex v);
 
 /// Applies standard color transformations.
 void aStandardColorShader(inout half4 color, ASurface s);
-
-/// Volumetric effects for base passes.
-void aVolumetricBase(inout half4 color, ASurface s);
-
-/// Volumetric effects for additive passes.
-void aVolumetricAdd(inout half4 color, ASurface s);
-
-/// Volumetric effects for multiplicative passes.
-void aVolumetricMultiply(inout half4 color, ASurface s);
 
 #endif // ALLOY_SHADERS_FRAMEWORK_TYPE_CGINC

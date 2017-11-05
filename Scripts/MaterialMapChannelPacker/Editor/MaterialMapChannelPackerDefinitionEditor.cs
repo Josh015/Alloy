@@ -1,4 +1,8 @@
-﻿using System.Linq;
+﻿// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 

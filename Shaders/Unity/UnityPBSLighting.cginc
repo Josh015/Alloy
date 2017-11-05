@@ -90,15 +90,15 @@ inline half3 BRDF_Unity_Indirect (half3 baseColor, half3 specColor, half oneMinu
 
 struct SurfaceOutputStandard
 {
-    fixed3 Albedo;      // base (diffuse or specular) color
-    fixed3 Normal;      // tangent space normal, if written
-    half3 Emission;
-    half Metallic;      // 0=non-metal, 1=metal
-    // Smoothness is the user facing name, it should be perceptual smoothness but user should not have to deal with it.
-    // Everywhere in the code you meet smoothness it is perceptual smoothness
-    half Smoothness;    // 0=rough, 1=smooth
-    half Occlusion;     // occlusion (default 1)
-    fixed Alpha;        // alpha for transparencies
+	fixed3 Albedo;		// base (diffuse or specular) color
+	fixed3 Normal;		// tangent space normal, if written
+	half3 Emission;
+	half Metallic;		// 0=non-metal, 1=metal
+	// Smoothness is the user facing name, it should be perceptual smoothness but user should not have to deal with it.
+	// Everywhere in the code you meet smoothness it is perceptual smoothness
+	half Smoothness;	// 0=rough, 1=smooth
+	half Occlusion;		// occlusion (default 1)
+	fixed Alpha;		// alpha for transparencies
     float3 PositionWorld; // Alloy
     half Shadow; // Alloy
 };
@@ -139,9 +139,9 @@ inline half4 LightingStandard_Deferred (SurfaceOutputStandard si, half3 viewDir,
 }
 
 inline void LightingStandard_GI (
-    SurfaceOutputStandard s,
-    UnityGIInput data,
-    inout UnityGI gi)
+	SurfaceOutputStandard s,
+	UnityGIInput data,
+	inout UnityGI gi)
 {
     aUnityLightingGi(gi, data, s.Normal, s.Smoothness, lerp(unity_ColorSpaceDielectricSpec.rgb, s.Albedo, s.Metallic));
 }
@@ -151,13 +151,13 @@ inline void LightingStandard_GI (
 
 struct SurfaceOutputStandardSpecular
 {
-    fixed3 Albedo;      // diffuse color
-    fixed3 Specular;    // specular color
-    fixed3 Normal;      // tangent space normal, if written
-    half3 Emission;
-    half Smoothness;    // 0=rough, 1=smooth
-    half Occlusion;     // occlusion (default 1)
-    fixed Alpha;        // alpha for transparencies
+	fixed3 Albedo;		// diffuse color
+	fixed3 Specular;	// specular color
+	fixed3 Normal;		// tangent space normal, if written
+	half3 Emission;
+	half Smoothness;	// 0=rough, 1=smooth
+	half Occlusion;		// occlusion (default 1)
+	fixed Alpha;		// alpha for transparencies
     float3 PositionWorld; // Alloy
     half Shadow; // Alloy
 };
@@ -199,9 +199,9 @@ inline half4 LightingStandardSpecular_Deferred (SurfaceOutputStandardSpecular si
 }
 
 inline void LightingStandardSpecular_GI (
-    SurfaceOutputStandardSpecular s,
-    UnityGIInput data,
-    inout UnityGI gi)
+	SurfaceOutputStandardSpecular s,
+	UnityGIInput data,
+	inout UnityGI gi)
 {
     aUnityLightingGi(gi, data, s.Normal, s.Smoothness, s.Specular);
 }

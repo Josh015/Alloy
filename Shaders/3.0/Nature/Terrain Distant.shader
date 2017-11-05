@@ -1,4 +1,8 @@
-﻿Shader "Hidden/Alloy/Nature/Terrain/Distant" {
+﻿// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
+Shader "Hidden/Alloy/Nature/Terrain/Distant" {
 Properties {
     // Distant Terrain
     _DistantSpecularity ("'Specularity' {Min:0, Max:1}", Float) = 0.5

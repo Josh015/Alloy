@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @file Tessellation.cginc
 /// @brief Callbacks and data structures for tessellation.
@@ -120,7 +124,11 @@
     #endif
 
     // NOTE: Forward-declared here so we can share Domain shader.
-    void aMainVertexShader(AVertexInput v, out AFragmentInput o);
+    void aMainVertexShader(AVertexInput v, 
+    #ifndef A_VERTEX_TO_FRAGMENT_OFF
+        out AFragmentInput o,
+    #endif
+        out float4 opos : SV_POSITION);
     
     // tessellation hull constant shader
     UnityTessellationFactors aHullConstantTessellation(
@@ -189,7 +197,10 @@
         UnityTessellationFactors tessFactors,
         const OutputPatch<ATessellationInput, 3> vi,
         float3 bary : SV_DomainLocation,
-        out AFragmentInput o)
+    #ifndef A_VERTEX_TO_FRAGMENT_OFF
+        out AFragmentInput o,
+    #endif
+        out float4 opos : SV_POSITION)
     {
         AVertexInput v;
         UNITY_INITIALIZE_OUTPUT(AVertexInput, v);
@@ -233,7 +244,12 @@
         v.vertex.xyz += v.normal * d;
     #endif
 
-        aMainVertexShader(v, o);
+        aMainVertexShader(
+            v, 
+    #ifndef A_VERTEX_TO_FRAGMENT_OFF
+            o, 
+    #endif
+            opos);
     }
 #endif
 

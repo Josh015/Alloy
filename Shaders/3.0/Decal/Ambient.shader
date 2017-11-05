@@ -1,4 +1,8 @@
-﻿Shader "Alloy/Decal/Ambient" {
+﻿// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
+Shader "Alloy/Decal/Ambient" {
 Properties {
     // Main Textures
     _MainTextures ("'Main Textures' {Section:{Color:0}}", Float) = 0
@@ -52,7 +56,7 @@ SubShader {
         
         #pragma shader_feature _TEAMCOLOR_ON
         
-        //#pragma multi_compile __ LOD_FADE_CROSSFADE
+        //#pragma multi_compile __ LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
         #pragma multi_compile_fwdbase
         #pragma multi_compile_fog
         #pragma multi_compile_instancing
@@ -82,7 +86,7 @@ SubShader {
 
         #pragma shader_feature _TEAMCOLOR_ON
         
-        //#pragma multi_compile __ LOD_FADE_CROSSFADE
+        //#pragma multi_compile __ LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
         #pragma multi_compile ___ UNITY_HDR_ON
         #pragma multi_compile_instancing
         

@@ -1,10 +1,14 @@
-﻿Shader "Alloy Mods/Deferred Decal Advanced" {
+﻿// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
+Shader "Alloy Mods/Deferred Decal Advanced" {
 Properties {
     [Toggle(EFFECT_BUMP)]
     _HasBumpMap ("'Normals Source' {Dropdown:{VertexNormals:{_BumpMap,_BumpScale,_DetailNormalMap,_DetailNormalMapScale,_WetNormalMap,_WetNormalMapScale}, NormalMaps:{}}}", Float) = 1
     
     // Main Textures
-    _MainTextures ("'Decal Textures' {Section:{Color:0}}", Float) = 0
+    _MainTextures ("'Deferred Decal Textures' {Section:{Color:0}}", Float) = 0
     [LM_Albedo] [LM_Transparency] 
     _Color ("'Tint' {}", Color) = (1,1,1,1)
     [HDR]
@@ -18,7 +22,7 @@ Properties {
     _BaseColorVertexTint ("'Vertex Color Tint' {Min:0, Max:1}", Float) = 0
      
     // Main Properties
-    _MainPhysicalProperties ("'Decal Properties' {Section:{Color:1}}", Float) = 0
+    _MainPhysicalProperties ("'Deferred Decal Properties' {Section:{Color:1}}", Float) = 0
     [LM_Metallic]
     _Metal ("'Metallic' {Min:0, Max:1}", Float) = 1
     _Specularity ("'Specularity' {Min:0, Max:1}", Float) = 1
@@ -69,11 +73,7 @@ SubShader {
         Tags { "LightMode" = "Deferred" }
 
         // Only overwrite G-Buffer RGB, but weight whole G-Buffer.
-        Blend 0 SrcAlpha OneMinusSrcAlpha, Zero One // Preserve surface SO.
-        Blend 1 SrcAlpha OneMinusSrcAlpha, Zero OneMinusSrcAlpha
-        Blend 2 SrcAlpha OneMinusSrcAlpha, Zero One // Preserve surface material type.
-        Blend 3 SrcAlpha OneMinusSrcAlpha, Zero One // Preserve surface transmission.
-        Blend 4 Zero One, Zero One // Preserve surface shadow masks.
+        Blend SrcAlpha OneMinusSrcAlpha, Zero OneMinusSrcAlpha
 
         CGPROGRAM
         #pragma target 3.0
@@ -84,7 +84,7 @@ SubShader {
         #pragma shader_feature _BUMPMODE_POM
         #pragma shader_feature _ _GLOSSYREFLECTIONS_OFF
         
-        //#pragma multi_compile __ LOD_FADE_CROSSFADE
+        //#pragma multi_compile __ LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
         #pragma multi_compile_prepassfinal
         #pragma skip_variants FOG_LINEAR FOG_EXP FOG_EXP2
         #pragma multi_compile_instancing
@@ -106,11 +106,7 @@ SubShader {
         Tags { "LightMode" = "Deferred" }
 
         // Only overwrite GBuffer A.
-        Blend 0 Zero One, Zero SrcAlpha // Combine decal and surface SO.
-        Blend 1 Zero One, One One
-        Blend 2 Zero One, Zero One // Preserve surface material type.
-        Blend 3 Zero One, Zero One // Preserve surface transmission.
-        Blend 4 Zero One, Zero One // Preserve surface shadow masks.
+        Blend One One
         ColorMask A
 
         CGPROGRAM
@@ -122,7 +118,7 @@ SubShader {
         #pragma shader_feature _BUMPMODE_POM
         #pragma shader_feature _ _GLOSSYREFLECTIONS_OFF
         
-        //#pragma multi_compile __ LOD_FADE_CROSSFADE
+        //#pragma multi_compile __ LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
         #pragma multi_compile_prepassfinal
         #pragma skip_variants FOG_LINEAR FOG_EXP FOG_EXP2
         #pragma multi_compile_instancing

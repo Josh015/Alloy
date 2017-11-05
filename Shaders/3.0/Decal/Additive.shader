@@ -1,4 +1,8 @@
-﻿Shader "Alloy/Decal/Additive" {
+﻿// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
+Shader "Alloy/Decal/Additive" {
 Properties {
     [Toggle(EFFECT_BUMP)]
     _HasBumpMap ("'Normals Source' {Dropdown:{VertexNormals:{_BumpMap,_BumpScale,_DetailNormalMap,_DetailNormalMapScale,_WetNormalMap,_WetNormalMapScale}, NormalMaps:{}}}", Float) = 1
@@ -143,7 +147,7 @@ SubShader {
         #pragma shader_feature _RIM_ON
         #pragma shader_feature _DISSOLVE_ON
         
-        //#pragma multi_compile __ LOD_FADE_CROSSFADE
+        //#pragma multi_compile __ LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
         #pragma multi_compile_fwdbase
         #pragma multi_compile_fog
         #pragma multi_compile_instancing
@@ -182,7 +186,7 @@ SubShader {
         #pragma shader_feature _RIM_ON
         #pragma shader_feature _DISSOLVE_ON
         
-        //#pragma multi_compile __ LOD_FADE_CROSSFADE
+        //#pragma multi_compile __ LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
         #pragma multi_compile ___ UNITY_HDR_ON
         #pragma multi_compile_instancing
         

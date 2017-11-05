@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 /////////////////////////////////////////////////////////////////////////////////
 /// @file WeightedBlend.cginc
 /// @brief Blending with a heightmap, a cutoff value, and the vertex color alpha.

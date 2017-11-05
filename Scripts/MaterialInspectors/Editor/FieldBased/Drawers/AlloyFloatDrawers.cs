@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
+using System;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using System.Collections;
@@ -92,10 +96,6 @@ public class AlloyFloatParser : AlloyFieldParser {
 
                 case "EnableInstancing":
                     retDrawer = new AlloyEnableInstancingDrawer(editor, MaterialProperty);
-                    break;
-
-                case "DoubleSidedGI":
-                    retDrawer = new AlloyDoubleSidedGiDrawer(editor, MaterialProperty);
                     break;
             }
         }

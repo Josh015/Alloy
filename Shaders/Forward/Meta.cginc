@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 /////////////////////////////////////////////////////////////////////////////////
 /// @file Meta.cginc
 /// @brief Forward meta pass vertex & fragment shaders.
@@ -18,10 +22,11 @@
 
 void aMainVertexShader(
     AVertexInput v,
-    out AFragmentInput o)
+    out AFragmentInput o,
+    out float4 opos : SV_POSITION)
 {
-    aForwardVertexShader(v, o);
-    o.pos = UnityMetaVertexPosition(v.vertex, v.uv1.xy, v.uv2.xy, unity_LightmapST, unity_DynamicLightmapST);
+    aForwardVertexShader(v, o, opos);
+    opos = UnityMetaVertexPosition(v.vertex, v.uv1.xy, v.uv2.xy, unity_LightmapST, unity_DynamicLightmapST);
 }
 
 float4 aMainFragmentShader(

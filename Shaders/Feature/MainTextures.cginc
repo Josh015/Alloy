@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 /////////////////////////////////////////////////////////////////////////////////
 /// @file MainTextures.cginc
 /// @brief Main set of textures.
@@ -39,12 +43,7 @@ void aMainTextures(
         s.ambientOcclusion = 1.0h;
         s.specularity = _Specularity;
         s.specularTint = _SpecularTint;
-
-        #ifdef A_MAIN_TEXTURES_CONSTANT_ROUGHNESS
-            s.roughness = _Roughness;
-        #else
-            s.roughness = _Roughness * base.a;
-        #endif
+        s.roughness = _Roughness * base.a;
     #else
         base *= tint;
         s.baseColor = base.rgb;

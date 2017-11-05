@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
+using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using UnityEditor;
@@ -91,16 +95,16 @@ public static class AlloyMigrationTools {
         System.Diagnostics.Process.Start(fileName);
     }
 
-    [MenuItem(AlloyUtils.MenuItem + "Material Migrator", false, 11)]
-    private static void MaterialMigrator() {
-        var window = ScriptableObject.CreateInstance<AlloyMaterialMigratorPopup>();
-        var dimensions = new Vector2(350, 100);
-
-        window.position = new Rect(Screen.width / 2, Screen.height / 2, 0, 0);
-        window.minSize = dimensions;
-        window.maxSize = dimensions;
-        window.ShowUtility();
-    }
+//    [MenuItem(AlloyUtils.MenuItem + "Material Migrator", false, 11)]
+//    private static void MaterialMigrator() {
+//        var window = ScriptableObject.CreateInstance<AlloyMaterialMigratorPopup>();
+//        var dimensions = new Vector2(350, 100);
+//
+//        window.position = new Rect(Screen.width / 2, Screen.height / 2, 0, 0);
+//        window.minSize = dimensions;
+//        window.maxSize = dimensions;
+//        window.ShowUtility();
+//    }
     
     [MenuItem(AlloyUtils.MenuItem + "Light Converter", false, 11)]
     private static void LightConverter() {
@@ -163,7 +167,7 @@ public class AlloyMaterialMigratorPopup : EditorWindow {
         "_DETAILMASKSOURCE_VERTEXCOLORALPHA", // Replaced with _NORMALMAP
         "_DETAILMODE_MUL",
         "_DETAILMODE_MULX2",
-        "_DIRECTIONALBLENDMODE_WORLD", // Deprecated after I made world-space the default.
+        "_DIRECTIONALBLENDMODE_OBJECT", // Set by stupid KeywordEnum.
         "_DISSOLVETEXUV_UV0",
         "_DISSOLVETEXUV_UV1",
         "_EMISSION_ON",
@@ -198,7 +202,7 @@ public class AlloyMaterialMigratorPopup : EditorWindow {
         "_TESSELLATIONMODE_COMBINED", // Dropped this mode in favor of using two other modes keywords together.
         "_TRANSITIONTEXUV_UV0",
         "_TRANSITIONTEXUV_UV1",
-        "_TRIPLANARMODE_WORLD", // Deprecated after I made world-space the default.
+        "_TRIPLANARMODE_OBJECT", // Set by stupid KeywordEnum.
         "_UVSEC_UV0", // Standard shader sets this.
         "_UVSEC_UV1", // Standard shader sets this.
     };
@@ -233,7 +237,7 @@ public class AlloyMaterialMigratorPopup : EditorWindow {
 
             for (int i = 0; i < length; i++) {
                 var material = AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(materialGuids[i]), typeof(Material)) as Material;
-                var shaderKeywords = material.shaderKeywords;
+                var toRemove = material.shaderKeywords.Intersect(keywordsToRemove);
                 var shaderName = material.shader.name;
 
                 EditorUtility.DisplayProgressBar(
@@ -242,46 +246,10 @@ public class AlloyMaterialMigratorPopup : EditorWindow {
                     i / (float)(length - 1));
                     
                 if (shaderName.Contains("Alloy")) {
-                    if (!shaderKeywords.Contains("EFFECT_BUMP")
-                        && material.HasProperty("_HasBumpMap")
+                    if (material.HasProperty("_HasBumpMap")
                         && Mathf.Approximately(material.GetFloat("_HasBumpMap"), 1.0f)) {
                         material.EnableKeyword("EFFECT_BUMP");
                     }
-
-                    // Have Eye shaders default to having no material map.
-                    if (!shaderKeywords.Contains("_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A")
-                        && material.HasProperty("_MainRoughnessSource")
-                        && Mathf.Approximately(material.GetFloat("_MainRoughnessSource"), 1.0f)) {
-                        material.EnableKeyword("_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A");
-                    }
-
-                    // TODO: Comment out these two case after enough time has passed.
-                    // Swap World and Object now that World is default.
-                    if (material.HasProperty("_DirectionalBlendMode")) {
-                        if (shaderKeywords.Contains("_DIRECTIONALBLENDMODE_WORLD")) {
-                            material.SetFloat("_DirectionalBlendMode", 0.0f);
-                            material.DisableKeyword("_DIRECTIONALBLENDMODE_WORLD");
-                        } else if (!shaderKeywords.Contains("_DIRECTIONALBLENDMODE_OBJECT")
-                                && Mathf.Approximately(material.GetFloat("_DirectionalBlendMode"), 0.0f)) {
-                            material.SetFloat("_DirectionalBlendMode", 1.0f);
-                            material.EnableKeyword("_DIRECTIONALBLENDMODE_OBJECT");
-                        }
-                    }
-
-                    // Swap World and Object now that World is default.
-                    if (material.HasProperty("_TriplanarMode")) {
-                        if (shaderKeywords.Contains("_TRIPLANARMODE_WORLD")) {
-                            material.SetFloat("_TriplanarMode", 0.0f);
-                            material.DisableKeyword("_TRIPLANARMODE_WORLD");
-                        } else if (!shaderKeywords.Contains("_TRIPLANARMODE_OBJECT")
-                                && Mathf.Approximately(material.GetFloat("_TriplanarMode"), 0.0f)) {
-                            material.SetFloat("_TriplanarMode", 1.0f);
-                            material.EnableKeyword("_TRIPLANARMODE_OBJECT");
-                        }
-                    }
-
-                    // Clean up any remaining keywords.
-                    var toRemove = shaderKeywords.Intersect(keywordsToRemove);
 
                     foreach (var keyword in toRemove) {
                         if (!string.IsNullOrEmpty(keyword)) {

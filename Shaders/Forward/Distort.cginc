@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 /////////////////////////////////////////////////////////////////////////////////
 /// @file Distort.cginc
 /// @brief Forward distort pass vertex & fragment shaders.
@@ -17,10 +21,10 @@
 #define A_BASE_PASS
 #define A_TESSELLATION_PASS
 #define A_INSTANCING_PASS
+#define A_STEREO_INSTANCING_PASS
 #define A_NORMAL_MAPPED_PASS
 #define A_PARALLAX_MAPPED_PASS
 #define A_VOLUMETRIC_PASS
-#define A_CROSSFADE_PASS
 
 #define A_FORWARD_TEXCOORD0 float3 normalProjection : TEXCOORD0;
 #define A_FORWARD_TEXCOORD1 float4 grabUv : TEXCOORD1;
@@ -48,12 +52,20 @@ float _DistortGeoWeight;
 
 void aMainVertexShader(
     AVertexInput v,
-    out AFragmentInput o)
+    out AFragmentInput o,
+    out float4 opos : SV_POSITION)
 {
-    aForwardVertexShader(v, o);
+    aForwardVertexShader(v, o, opos);
     o.normalProjection = mul((float3x3)UNITY_MATRIX_MVP, v.normal);
-    o.grabUv = ComputeGrabScreenPos(o.pos);
-    o.grabUv.z = UNITY_Z_0_FAR_FROM_CLIPSPACE(o.grabUv.z);
+
+    // Until ComputeGrabScreenPos() is fixed, just directly pasted code here.
+#if UNITY_UV_STARTS_AT_TOP
+    float scale = -1.0;
+#else
+    float scale = 1.0;
+#endif
+    o.grabUv.xy = (float2(opos.x, opos.y * scale) + opos.ww) * 0.5;
+    o.grabUv.zw = opos.zw;
 }
 
 half4 aMainFragmentShader(
@@ -62,6 +74,13 @@ half4 aMainFragmentShader(
 {
     // Transfer instancing and stereo IDs.
     ASurface s = aForwardSurface(i, A_FACING_SIGN);
+
+    // Adjust grab texture UVs and weight.
+    i.grabUv.z = UNITY_Z_0_FAR_FROM_CLIPSPACE(i.grabUv.z);
+
+#if UNITY_SINGLE_PASS_STEREO
+    i.grabUv.xy = TransformStereoScreenSpaceTex(i.grabUv.xy, i.grabUv.w);
+#endif
 
     // Mesh normals distortion.
     // cf http://wiki.unity3d.com/index.php?title=Refraction

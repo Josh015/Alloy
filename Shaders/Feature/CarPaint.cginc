@@ -1,3 +1,7 @@
+// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
 /////////////////////////////////////////////////////////////////////////////////
 /// @file CarPaint.cginc
 /// @brief View-dependent secondary color tint and metal flakes layers.
@@ -23,18 +27,14 @@
 #include "Assets/Alloy/Shaders/Framework/Feature.cginc"
 
 #ifdef A_CAR_PAINT_ON
-    /// The primary paint tint.
+    /// The primary paint tint color.
     /// Expects a linear LDR color.
     half3 _CarPrimaryColor;
     
-    /// The secondary paint tint.
+    /// The secondary paint tint color.
     /// Expects a linear LDR color.
     half3 _CarSecondaryColor;
-
-    /// Secondary paint color.
-    /// Expects an RGB map with sRGB sampling.
-    sampler2D _CarSecondaryColorMap;
-
+    
     /// The secondary paint tint color weight.
     /// Expects values in the range [0,1].
     half _CarSecondaryColorWeight;
@@ -79,17 +79,9 @@ void aCarPaint(
     // Two-Tone Paint
     half secondaryColorFalloff = 1.0h - pow(s.NdotV, 0.1 + 9.9h * _CarSecondaryColorFalloff);
     half secondaryColorWeight = _CarSecondaryColorWeight * secondaryColorFalloff;
-
-#ifndef _PAINTSECONDARYSOURCE_COLORMAP
     half3 paintColor = lerp(_CarPrimaryColor, _CarSecondaryColor, secondaryColorWeight);
 
     s.baseColor *= aLerpWhiteTo(paintColor, s.mask);
-#else
-    half3 secondaryColor = _CarSecondaryColor * tex2D(_CarSecondaryColorMap, s.baseUv);
-    half3 paintColor = lerp(_CarPrimaryColor * s.baseColor, secondaryColor, secondaryColorWeight);
-
-    s.baseColor = lerp(s.baseColor, paintColor, s.mask);
-#endif
     
     // Metal Flakes
     // NOTE: Metal brightness will overpower clearcoat, hiding roughness difference.

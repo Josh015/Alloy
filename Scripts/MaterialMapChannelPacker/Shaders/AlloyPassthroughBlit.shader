@@ -1,4 +1,8 @@
-﻿Shader "Hidden/AlloyPassthroughBlit" {
+﻿// Alloy Physical Shader Framework
+// Copyright 2013-2017 RUST LLC.
+// http://www.alloy.rustltd.com/
+
+Shader "Hidden/AlloyPassthroughBlit" {
     Properties {
         _MainTex ("Render Input", 2D) = "white" {}
     }
