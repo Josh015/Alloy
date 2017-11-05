@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 54dced0a2f15f5f459d21edaf7e8b721
+timeCreated: 1456952662
+licenseType: Pro
+ShaderImporter:
+  defaultTextures:
+  - _Splat0: {instanceID: 0}
+  - _Normal0: {instanceID: 0}
+  - _Splat1: {instanceID: 0}
+  - _Normal1: {instanceID: 0}
+  - _Splat2: {instanceID: 0}
+  - _Normal2: {instanceID: 0}
+  - _Splat3: {instanceID: 0}
+  - _Normal3: {instanceID: 0}
+  - _DetailAlbedoMap: {instanceID: 0}
+  - _DetailMaterialMap: {fileID: 2800000, guid: 2b77d5cb601375f4ba50c6194c126e59,
+      type: 3}
+  - _DetailNormalMap: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
