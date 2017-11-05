@@ -877,14 +877,14 @@ Known issues:
    + Updated Alloy to use Skyshop 1.11.
 
 ## 2.1.1
+### Shaders
+* Fixed the translucent & skin shaders to render correctly in deferred mode on MacOSX.
+* Fixes issues when using skin shaders with Candela in deferred mode. 
+
 ### Integration
 * Substance Designer
    + Updated Alloy preview shader to use the new SH diffuse lighting feature.
    + Added a new shader to render using packed material map rather than individual channels.
-
-Bug Fixes:
-* Fixed the translucent & skin shaders to render correctly in deferred mode on MacOSX.
-* Fixes issues when using skin shaders with Candela in deferred mode. 
 
 ## 2.1.0
 ### Shaders
