@@ -37,8 +37,8 @@ To use the Skin, SpeedTree, and/or Transmission shaders in deferred mode, you MU
 1. Open Edit->Project Settings->Graphics.
 2. Set the 'Deferred' setting to 'Custom shader'.
 3. Open the picker below, and select either the 'Alloy Deferred Skin' or 'Alloy Deferred Transmission' shader based on your performance requirements.
-  * 'Alloy Deferred Transmission' covers the SpeedTree and Transmission shaders.
-  * 'Alloy Deferred Skin' covers the Skin, SpeedTree, and Transmission shaders.
+   * 'Alloy Deferred Transmission' covers the SpeedTree and Transmission shaders.
+   * 'Alloy Deferred Skin' covers the Skin, SpeedTree, and Transmission shaders.
 4. Go to the "Hierarchy" tab, and select your camera.
 5. Add the component "Alloy/Alloy Effects Manager".
 6. Add or remove the "Skin Scattering" and/or "Transmission" tabs to reduce cost.
