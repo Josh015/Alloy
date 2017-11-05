@@ -566,7 +566,7 @@ NOTE:
 * Fixed the Detail feature code that caused it to fail to compile on some MacOSX platforms.
 * Fixed the Substance Designer preview shaders' code that caused them to fail to compile on AMD GPUs.
 
-## 3.1
+## 3.1.0
 ### Shaders
 * Added "Directional Blend" shaders with support for blending around an arbitrary direction on the surface.
 * Added "Vertex Blend 4Splat" shaders with support for blending 4 splats using vertex colors.
@@ -611,7 +611,7 @@ NOTE:
 ### Known Issues
 * The visualize feature currently doesn't work properly for textures that use world-space UVs.
 
-## 3.02
+## 3.0.2
 ### Shaders
 * Changed to an optimized BRDF visibility function.
    + Toggle legacy behavior in the config header.
@@ -633,7 +633,7 @@ NOTE:
    + Changed visibility function to match Unity shaders.
    + Removed the Specular AA feature as it was never really working properly due to the lack of mipmap generation.
 
-## 3.01
+## 3.0.1
 ### Shaders  
 * Added support for tinting the base color with vertex colors.
 * Added a Mode dropdown to the Team Color feature to support explicitly turning off the alpha mask.
@@ -656,7 +656,7 @@ NOTE:
    + Updated the preview shader to support SP1.3.
    + Added Alpha translucency and cutout variants of the preview shader.
 
-## 3.0 beta8
+## 3.0.0 beta8
 ### Shaders  
 * Added a cutoff control the Hair Translucent shaders to allow control over the opaque regions for better sorting.
 * Modified all the Tessellation shaders to use their regular variants as fallbacks. 
@@ -667,7 +667,7 @@ NOTE:
 * Fixed our Area Light code to now convert existing light data to our representation when the Area Light component is added.
 * Fixed our Terrain Packed Maps to correctly grab color info, rather than just a single channel.
   
-## 3.0 beta7
+## 3.0.0 beta7
 ### Shaders 
 * Added a new config option for higher quality IBL fresnel.
    + Currently disabled by default as we decide if we want to make it the new default. 
@@ -675,7 +675,7 @@ NOTE:
 * Moved the Max intensity constant to the Config header to allow easier customization. 
 * Fixed a bug in our Amplify Texture support code where we were using the wrong function when sampling normals.
 
-## 3.0 beta6
+## 3.0.0 beta6
 ### Shaders 
 * Changed the Particle shaders:
    + Added a rim fade feature to support light shaft effects.
@@ -683,7 +683,7 @@ NOTE:
    + Centralized their code in a shared header for easier maintenance. 
 * Switched to using Unity RC3's new [Gamma] attribute for some input properties to save calculations inside the shaders.
 
-## 3.0 beta5
+## 3.0.0 beta5
 ### Shaders 
 * Changed the config header to add an option for enabling a minimum tessellation edge length property. 
   This can be globally set by a script to control the tessellation quality of all models.
@@ -693,7 +693,7 @@ NOTE:
    + If the Oriented material has an alpha channel, it alpha blends on top of the base material.
    + If the base material has an alpha, it will alpha through or cutout the oriented material.  
 
-## 3.0 beta4
+## 3.0.0 beta4
 ### Shaders 
 * Changed surface shader API.
    + Added support for modifying vertices.
@@ -705,7 +705,7 @@ NOTE:
 * Material Inspector
    + Fixed an issue with the visualize function where the underlying mesh would poke through on edges.
 
-## 3.0 beta3
+## 3.0.0 beta3
 ### Shaders 
 * Changed the Terrain shaders.
    + Restored the additional per-splat parameters and base layer.
@@ -719,7 +719,7 @@ NOTE:
 * Material Inspector
    + Added a new control for Unity's LightmapEmissionProperty.
 
-## 3.0 beta2
+## 3.0.0 beta2
 ### Shaders 
 * Added "Oriented/Core" shaders
    + World-textured material.
@@ -745,7 +745,7 @@ NOTE:
    + Added support for rendering a Vector2-4 control for Vector properties. 
    + Fixed a bug where it would render a color control for Vector properties.
 
-## 3.0 beta1
+## 3.0.0 beta1
 Lighting:
 * Added support for both Point and Spot Spherical Area lights!
 * Modified Point and Spot lights to use Inverse Square physical attenuation.
@@ -886,7 +886,7 @@ Bug Fixes:
 * Fixed the translucent & skin shaders to render correctly in deferred mode on MacOSX.
 * Fixes issues when using skin shaders with Candela in deferred mode. 
 
-## 2.1
+## 2.1.0
 ### Shaders
 * Added support for Parallax & Parallax Occlusion Mapping modes in "\Core" and "\Transparent\Cutout" shaders.
 * Added a TeamColor detail mode to the standard shaders.
@@ -940,7 +940,7 @@ NOTE: It is also possible to set the Aniso level, in case you didn't know.
 ## 2.0.2
 * Fixed inspector bug preventing custom cubes to be input.
 
-## 2.0 
+## 2.0.0
 ### Shading Improvements
 * Increased Specular Power Range
 * Better Visibility Function * Treyarch Shlick Approximation
@@ -981,7 +981,7 @@ NOTE: It is also possible to set the Aniso level, in case you didn't know.
 * We don't have a terrain shader currently. Don't worry, we're working hard on it, but didn't want to delay this update further.
 
 
-## 1.01
+## 1.0.1
 * Standardized the API naming conventions to avoid name collisions when mixing shader libraries. This will break current user-created shaders, which will need to be updated to use the new API.
    + RimLight() -> aRimLight()
    + EPSILON -> A_EPSILON
