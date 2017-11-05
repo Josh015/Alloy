@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f11657fe81562504cb1b05d4e700d54d, type: 3}
+  m_Name: AlphaPack
+  m_EditorClassIdentifier: 
+  Title: Alpha
+  Suffix: _AlloyAM
+  VarianceBias: 1
+  ImportSettings:
+    IsLinear: 0
+    Filter: 2
+    DefaultCompressed: 1
+  Channels:
+  - Title: Color
+    HelpText: 
+    BackgroundColor: {r: 0, g: .583999991, b: .0520000011, a: 1}
+    CanInvert: 0
+    InputChannels: 7
+    OutputChannels: 7
+    RoughnessCorrect: 0
+    OutputVariance: 0
+    HideChannel: 0
+    DefaultMode: 4
+  - Title: Alpha
+    HelpText: 
+    BackgroundColor: {r: 0, g: 0, b: 0, a: 1}
+    CanInvert: 1
+    InputChannels: 2
+    OutputChannels: 8
+    RoughnessCorrect: 0
+    OutputVariance: 0
+    HideChannel: 0
+    DefaultMode: 4

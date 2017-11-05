@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: e13ed666bcef6874386610d2ef878488
+timeCreated: 1468958632
+licenseType: Pro
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - DefaultSpotLightCookie: {fileID: 2800000, guid: d21bb2c11f0e5a2498a9ecc9cccfab62,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

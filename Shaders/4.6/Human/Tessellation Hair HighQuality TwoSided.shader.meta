@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f29dc37d6e2e32042817ad3c72fa12ee
+ShaderImporter:
+  defaultTextures:
+  - _MainTex: {instanceID: 0}
+  - _SpecTex: {fileID: 2800000, guid: 33a37609d895f134d80ba24c3cf0f503, type: 3}
+  - _BumpMap: {instanceID: 0}
+  - _DispTex: {instanceID: 0}
+  - _DecalTex: {instanceID: 0}
+  - _EmissionMap: {instanceID: 0}
+  - _IncandescenceMap: {instanceID: 0}
+  - _RimTex: {instanceID: 0}
+  - _DissolveTex: {instanceID: 0}
+  userData: 
+  assetBundleName: 

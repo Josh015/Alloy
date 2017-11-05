@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: bf5b97b13ec5bae41ac96a39caf39874
+timeCreated: 1487764061
+licenseType: Pro
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - SkinLut: {fileID: 2800000, guid: d13510bb2be49aa40a66a0101efb6a36, type: 3}
+  - TransmissionBlitShader: {fileID: 4800000, guid: 4bbeef29a84b4ed498f2d4a7d9fcefc4,
+      type: 3}
+  - BlurNormalsShader: {fileID: 4800000, guid: 5b34ef975c671984fb9c93adc7042982, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

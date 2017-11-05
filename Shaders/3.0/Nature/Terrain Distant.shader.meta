@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: ef968fede0fa8be47be2bb35732ddaab
+ShaderImporter:
+  defaultTextures:
+  - _DetailAlbedoMap: {instanceID: 0}
+  - _DetailMaterialMap: {fileID: 2800000, guid: 2b77d5cb601375f4ba50c6194c126e59,
+      type: 3}
+  - _DetailNormalMap: {instanceID: 0}
+  userData: 
+  assetBundleName: 

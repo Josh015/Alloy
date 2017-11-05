@@ -1,0 +1,29 @@
+fileFormatVersion: 2
+guid: 8316c572e004a604c8e86cda3a3cfde5
+timeCreated: 1430076271
+licenseType: Pro
+ShaderImporter:
+  defaultTextures:
+  - _MainTex: {instanceID: 0}
+  - _SpecTex: {instanceID: 0}
+  - _BumpMap: {instanceID: 0}
+  - _DispTex: {instanceID: 0}
+  - _ParallaxMap: {instanceID: 0}
+  - _Ao2Map: {instanceID: 0}
+  - _DetailMask: {instanceID: 0}
+  - _DetailAlbedoMap: {instanceID: 0}
+  - _DetailMaterialMap: {fileID: 2800000, guid: 2b77d5cb601375f4ba50c6194c126e59,
+      type: 3}
+  - _DetailNormalMap: {instanceID: 0}
+  - _TeamColorMaskMap: {instanceID: 0}
+  - _DecalTex: {instanceID: 0}
+  - _EmissionMap: {instanceID: 0}
+  - _IncandescenceMap: {instanceID: 0}
+  - _RimTex: {instanceID: 0}
+  - _DissolveTex: {instanceID: 0}
+  - _OrientedMainTex: {instanceID: 0}
+  - _OrientedMaterialMap: {instanceID: 0}
+  - _OrientedBumpMap: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

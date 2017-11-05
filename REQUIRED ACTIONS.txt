@@ -1,0 +1,7 @@
+--ATTENTION--
+After upgrading to Alloy 4.1.1 or later for the first time, please do the following:
+1.) Check if you have any materials with "Eye", "Directional Blend", "TriPlanar", or "Vertex Blend" in TriPlanar mode shaders in your project.
+2.) If so, run "Window->Alloy->Material Migrator" tool ONLY once and never again.
+3.) After it completes, save your project.
+
+For documentation, go to the menu "Window->Alloy->Documentation".

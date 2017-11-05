@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f11657fe81562504cb1b05d4e700d54d, type: 3}
+  m_Name: PackedPack
+  m_EditorClassIdentifier: 
+  Title: Packed
+  Suffix: _AlloyPM
+  VarianceBias: 1
+  ImportSettings:
+    IsLinear: 1
+    Filter: 2
+    DefaultCompressed: 1
+  Channels:
+  - Title: Metallic
+    HelpText: Black = Non-metal, White = Metal
+    BackgroundColor: {r: .588235319, g: 0, b: 0, a: 1}
+    CanInvert: 1
+    InputChannels: 2
+    OutputChannels: 1
+    RoughnessCorrect: 0
+    OutputVariance: 0
+    HideChannel: 0
+    DefaultMode: 4
+  - Title: Occlusion
+    HelpText: Black = Occluded, White = Unoccluded
+    BackgroundColor: {r: 0, g: .583999991, b: .0520000011, a: 1}
+    CanInvert: 1
+    InputChannels: 2
+    OutputChannels: 2
+    RoughnessCorrect: 0
+    OutputVariance: 0
+    HideChannel: 0
+    DefaultMode: 4
+  - Title: Specularity
+    HelpText: Black = Air, Gray = Paint, White = Gems
+    BackgroundColor: {r: .0431372561, g: 0, b: .580392182, a: 1}
+    CanInvert: 1
+    InputChannels: 2
+    OutputChannels: 4
+    RoughnessCorrect: 0
+    OutputVariance: 0
+    HideChannel: 0
+    DefaultMode: 1
+  - Title: Roughness
+    HelpText: Black = Smooth, White = Rough
+    BackgroundColor: {r: 0, g: 0, b: 0, a: 1}
+    CanInvert: 1
+    InputChannels: 2
+    OutputChannels: 8
+    RoughnessCorrect: 1
+    OutputVariance: 0
+    HideChannel: 0
+    DefaultMode: 4

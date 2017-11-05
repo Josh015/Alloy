@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 0a472145c854eb34e8256501c092943e
+ShaderImporter:
+  defaultTextures:
+  - _MainTex: {instanceID: 0}
+  - _SpecTex: {instanceID: 0}
+  - _BumpMap: {instanceID: 0}
+  - _ParallaxMap: {instanceID: 0}
+  - _Ao2Map: {instanceID: 0}
+  - _DetailMask: {instanceID: 0}
+  - _DetailAlbedoMap: {instanceID: 0}
+  - _DetailMaterialMap: {fileID: 2800000, guid: 2b77d5cb601375f4ba50c6194c126e59,
+      type: 3}
+  - _DetailNormalMap: {instanceID: 0}
+  - _TeamColorMaskMap: {instanceID: 0}
+  - _DecalTex: {instanceID: 0}
+  - _EmissionMap: {instanceID: 0}
+  - _IncandescenceMap: {instanceID: 0}
+  - _RimTex: {instanceID: 0}
+  - _DissolveTex: {instanceID: 0}
+  userData: 
+  assetBundleName: 

@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f11657fe81562504cb1b05d4e700d54d, type: 3}
+  m_Name: MasksPack
+  m_EditorClassIdentifier: 
+  Title: Masks
+  Suffix: _AlloyMM
+  VarianceBias: 1
+  ImportSettings:
+    IsLinear: 1
+    Filter: 2
+    DefaultCompressed: 1
+  Channels:
+  - Title: Red
+    HelpText: 
+    BackgroundColor: {r: 0.5882353, g: 0, b: 0, a: 1}
+    CanInvert: 1
+    InvertByDefault: 0
+    InputChannels: 2
+    OutputChannels: 1
+    RoughnessCorrect: 0
+    OutputVariance: 0
+    HideChannel: 0
+    DefaultMode: 4
+  - Title: Green
+    HelpText: 
+    BackgroundColor: {r: 0, g: 0.584, b: 0.052, a: 1}
+    CanInvert: 1
+    InvertByDefault: 0
+    InputChannels: 2
+    OutputChannels: 2
+    RoughnessCorrect: 0
+    OutputVariance: 0
+    HideChannel: 0
+    DefaultMode: 4
+  - Title: Blue
+    HelpText: 
+    BackgroundColor: {r: 0.043137256, g: 0, b: 0.5803922, a: 1}
+    CanInvert: 1
+    InvertByDefault: 0
+    InputChannels: 2
+    OutputChannels: 4
+    RoughnessCorrect: 0
+    OutputVariance: 0
+    HideChannel: 0
+    DefaultMode: 4
+  - Title: Alpha
+    HelpText: 
+    BackgroundColor: {r: 0, g: 0, b: 0, a: 1}
+    CanInvert: 1
+    InvertByDefault: 0
+    InputChannels: 2
+    OutputChannels: 8
+    RoughnessCorrect: 0
+    OutputVariance: 0
+    HideChannel: 0
+    DefaultMode: 4
