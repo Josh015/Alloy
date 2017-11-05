@@ -1,4 +1,4 @@
-### Extensions 
+# Extensions 
 These are separate packages of shaders and scripts that reference Alloy and build on top of it. Here are a few official examples:
 
 ## Legacy
