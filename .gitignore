@@ -1,0 +1,88 @@
+# =============== #
+# Unity generated #
+# =============== #
+Temp/
+Library/
+
+# ===================================== #
+# Visual Studio / Monodevelop generated #
+# ===================================== #
+ExportedObj/
+obj/
+*.svd
+*.userprefs
+/*.csproj
+*.pidb
+*.suo
+/*.sln
+*.user
+*.unityproj
+*.booproj
+
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ============ #
+# Unity Store  #
+# ============ #
+Assets/Alloy Packs.meta
+Assets/Alloy Packs/
+Assets/AmplifyShaderEditor.meta
+Assets/AmplifyShaderEditor/
+Assets/AmplifyTexture.meta
+Assets/AmplifyTexture/
+ProjectSettings/AmplifySettings.asset
+Assets/CandelaSSRR.meta
+Assets/CandelaSSRR/
+Assets/Gizmos.meta
+Assets/Gizmos/
+Assets/Marmoset.meta
+Assets/Marmoset/
+Assets/Plugins.meta
+Assets/Plugins/
+Assets/redLights.meta
+Assets/redLights/
+Assets/ReliefPack/
+Assets/ReliefPack.meta
+Assets/Scion/
+Assets/Scion.meta
+Assets/Sonic Ether.meta
+Assets/Sonic Ether/
+Assets/Sinuous_SciFi_Signs.meta
+Assets/Sinuous_SciFi_Signs/
+Assets/SSFS_v14.meta
+Assets/SSFS_v14/
+Assets/Standard Assets.meta
+Assets/Standard Assets/
+Assets/SUIMONO - WATER SYSTEM 2.meta
+Assets/SUIMONO - WATER SYSTEM 2/
+Assets/UBER.meta
+Assets/UBER/
+Assets/Vapor.meta
+Assets/Vapor/
+Assets/VertExmotion.meta
+Assets/VertExmotion/
+
+# ============ #
+# Testing      #
+# ============ #
+Assets/DevTestAssets/
+Assets/DevTestAssets.meta
+_ReSharper.Alloy-csharp/
+Assets/Substances_Free.meta
+Assets/Substances_Free/
+UnityVS.Alloy.sln.ide/
+Assets/UnityVS/
+Alloy-csharp.sln.ide/
+Assets/UnityVS.meta
+Assets/Alloy3Samples
+Assets/Alloy3Samples.meta
+Assets/Alloy/Shaders/Resources/Thumbs.db.meta
