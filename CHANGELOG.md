@@ -988,21 +988,13 @@ NOTE: It is also possible to set the Aniso level, in case you didn't know.
    + DeGamma() -> AlloyDeGamma()
    + LinearLuminance() -> AlloyLinearLuminance()
    + etc.
-
 * Added a new material API to move implementation details of our material system out of the individual shaders. 
    + Direct access to the SurfaceOutput will no longer work correctly.
    + For custom shaders, we strongly recommend using the new API.
-
 * The headers are no longer obfuscated, and come fully commented.
-
 * Renamed “Alloy/Transparent/MaskedIncandescence Rim” to “Alloy/Effects/MaskedIncandescence Rim” since it doesn’t integrate with Unity’s translucency system for baking.
-
 * Fixed an issue in “Alloy/Effects/MaskedIncandescence Rim” where it wasn’t getting texture coordinates from the mask texture
-
 * Reoredered the parameters for all the “*MaskedIncandescence*” shaders so that the Mask is higher up to show that it uses the first UV set while the Incandescence texture uses the second UV set.
-
 * Removed an unnecessary energy conserving step from the distort pass of the alpha distort shaders.
-
 * Fixed an issue where alpha was darkening albedo in cutout shaders.
-
 * Fixed an issue in the terrain shaders where the blend weights were being applied twice to the smoothness, causing them to be biased toward rough values where multiple splats overlapped.
