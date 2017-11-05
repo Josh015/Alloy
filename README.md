@@ -20,7 +20,7 @@ Before using Alloy, there a couple things you MUST set up in your project:
 1. Open Edit->Project Settings->Graphics.
 2. Set the 'Deferred' setting to 'Custom shader'.
 3. Open the picker below, and select the 'Alloy Deferred Shading' shader.
-  * See "Advanced Setup" section for additional options.
+  - See "Advanced Setup" section for additional options.
 4. Set the 'Deferred Reflections' setting to 'Custom shader'.
 5. Open the picker below, and select the 'Alloy Deferred Reflections' shader.
 6. Open Edit->Project Settings->Player.
@@ -40,8 +40,8 @@ To use the Skin, SpeedTree, and/or Transmission shaders in deferred mode, you MU
 1. Open Edit->Project Settings->Graphics.
 2. Set the 'Deferred' setting to 'Custom shader'.
 3. Open the picker below, and select either the 'Alloy Deferred Skin' or 'Alloy Deferred Transmission' shader based on your performance requirements.
-  * 'Alloy Deferred Transmission' covers the SpeedTree and Transmission shaders.
-  * 'Alloy Deferred Skin' covers the Skin, SpeedTree, and Transmission shaders.
+  - 'Alloy Deferred Transmission' covers the SpeedTree and Transmission shaders.
+  - 'Alloy Deferred Skin' covers the Skin, SpeedTree, and Transmission shaders.
 4. Go to the "Hierarchy" tab, and select your camera.
 5. Add the component "Alloy/Alloy Effects Manager".
 6. Add or remove the "Skin Scattering" and/or "Transmission" tabs to reduce cost.
