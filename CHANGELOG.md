@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.2.1
+### Shaders
+* Moved "Legacy" and "Mods" into the "Alloy" folder to make it easier to open source all related files.
+
 ## 4.2.0
 ### Shaders
 * Added Unity 2017.2 support.
