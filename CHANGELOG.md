@@ -2,7 +2,11 @@
 
 ## 4.2.1
 ### Shaders
-* Moved "Legacy" and "Mods" into the "Alloy" folder to make it easier to open source all related files.
+* Moved "Legacy" and "Mods" into the "Alloy" folder as part of the transition to open-source.
+
+### Integration
+* Updated Substance Designer preview shader to version 2017.2.
+* Updated Substance Painter preview shader to version 2017.3.
 
 ## 4.2.0
 ### Shaders
