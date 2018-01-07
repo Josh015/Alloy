@@ -27,11 +27,11 @@ half4 aMainFragmentShader(
 	d.worldPos = s.positionWorld;
 	d.worldViewDir = s.viewDirWorld; // ???
 	d.probeHDR[0] = unity_SpecCube0_HDR;
+    d.boxMin[0].w = 1; // 1 in .w allow to disable blending in UnityGI_IndirectSpecular call since it doesn't work in Deferred
 
 #ifdef UNITY_SPECCUBE_BOX_PROJECTION
 	d.probePosition[0]	= unity_SpecCube0_ProbePosition;
 	d.boxMin[0].xyz		= unity_SpecCube0_BoxMin - float4(blendDistance,blendDistance,blendDistance,0);
-	d.boxMin[0].w		= 1;  // 1 in .w allow to disable blending in UnityGI_IndirectSpecular call
 	d.boxMax[0].xyz		= unity_SpecCube0_BoxMax + float4(blendDistance,blendDistance,blendDistance,0);
 #endif
 
