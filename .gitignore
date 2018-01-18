@@ -2,6 +2,7 @@
 # Project-specific                      #
 # ===================================== #
 /Packages/
+Packages.meta
 
 # ===================================== #
 # Visual Studio / Monodevelop generated #
