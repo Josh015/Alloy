@@ -1,6 +1,8 @@
 # Changelog
 
 ## 4.3.0
+* Switched to Alloy Open Source as basis.
+
 ### Shaders
 * Added Unity 2017.3 support.
 * Moved "Legacy" and "Mods" into the "Alloy" folder as part of the transition to open-source.
