@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-[CustomPropertyDrawer(typeof(MinValueAttribute))]
+[CustomPropertyDrawer(typeof(AlloyMinValueAttribute))]
 public class MinValueDrawer : PropertyDrawer {
     // Draw the property inside the given rect
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
@@ -15,7 +15,7 @@ public class MinValueDrawer : PropertyDrawer {
         float newVal = EditorGUI.FloatField(position, label, property.floatValue);
         
         if (EditorGUI.EndChangeCheck()) {
-            newVal = Mathf.Max((attribute as MinValueAttribute).Min, newVal);
+            newVal = Mathf.Max((attribute as AlloyMinValueAttribute).Min, newVal);
             property.floatValue = newVal;
         }
 
@@ -23,7 +23,7 @@ public class MinValueDrawer : PropertyDrawer {
     }
 }
 
-[CustomPropertyDrawer(typeof(MaxValueAttribute))]
+[CustomPropertyDrawer(typeof(AlloyMaxValueAttribute))]
 public class MaxValueDrawer : PropertyDrawer {
     // Draw the property inside the given rect
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
@@ -38,7 +38,7 @@ public class MaxValueDrawer : PropertyDrawer {
         float newVal = EditorGUI.FloatField(position, label, property.floatValue);
 
         if (EditorGUI.EndChangeCheck()) {
-            newVal = Mathf.Min((attribute as MaxValueAttribute).Max, newVal);
+            newVal = Mathf.Min((attribute as AlloyMaxValueAttribute).Max, newVal);
             property.floatValue = newVal;
         }
         EditorGUI.EndProperty();

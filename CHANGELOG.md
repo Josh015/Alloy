@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.3.1
+### Scripts
+* Fixed issue where Alloy's internal MinValue attribute was colliding with similarly named attributes in other packages.
+
 ## 4.3.0
 ### Shaders
 * Added Unity 2017.3 support.

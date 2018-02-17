@@ -1,18 +1,18 @@
 ﻿using UnityEngine;
 
-public class MinValueAttribute : PropertyAttribute {
+public class AlloyMinValueAttribute : PropertyAttribute {
     public float Min;
 
-    public MinValueAttribute(float min) {
+    public AlloyMinValueAttribute(float min) {
         Min = min;
     }
 }
 
 
-public class MaxValueAttribute : PropertyAttribute {
+public class AlloyMaxValueAttribute : PropertyAttribute {
     public float Max;
 
-    public MaxValueAttribute(float min) {
+    public AlloyMaxValueAttribute(float min) {
         Max = min;
     }
 }

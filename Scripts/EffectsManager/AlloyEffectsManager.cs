@@ -58,7 +58,7 @@ public class AlloyEffectsManager : MonoBehaviour {
         [Tooltip("Amount that the transmission is distorted by surface normals.")]
         public float BumpDistortion;
 
-        [MinValue(1.0f)] 
+        [AlloyMinValue(1.0f)] 
         public float Falloff;
     }
 
