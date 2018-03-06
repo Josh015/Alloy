@@ -3,6 +3,7 @@
 ## 4.3.1
 ### Scripts
 * Fixed issue where Alloy's internal MinValue attribute was colliding with similarly named attributes in other packages.
+* Fixed menu Window->Alloy->Documentation to point to the new URL for the archived site documentation.
 
 ## 4.3.0
 ### Shaders
